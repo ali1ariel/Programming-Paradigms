@@ -16,7 +16,7 @@ public class UsuarioDaBiblioteca {
 	
 
 	public UsuarioDaBiblioteca incluirUsuario() {
-		UsuarioDaBiblioteca.totalDeUsuarios++;
+		UsuarioDaBiblioteca.setTotalDeUsuarios(UsuarioDaBiblioteca.getTotalDeUsuarios()+1);
 		UsuarioDaBiblioteca user = new UsuarioDaBiblioteca();
 		ler = new Scanner(System.in);
 		System.out.println("Digite o nome do novo Usuário");
@@ -32,11 +32,11 @@ public class UsuarioDaBiblioteca {
 		int prof = ler.nextInt();
 		if (prof == 1) {
 			user.setProfessor(true);
-			UsuarioDaBiblioteca.totalDeProfessores++;
+			UsuarioDaBiblioteca.setTotalDeProfessores(UsuarioDaBiblioteca.getTotalDeProfessores()+1);
 		}
 		else {
 			user.setProfessor(false);
-			UsuarioDaBiblioteca.totalDeAlunos++;
+			UsuarioDaBiblioteca.setTotalDeProfessores(UsuarioDaBiblioteca.getTotalDeProfessores()+1);
 		}
 		user.setLivrosEmprestados(0);
 			
