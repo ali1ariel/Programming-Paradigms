@@ -2,14 +2,15 @@ package biblioteca;
 import java.util.Scanner;
 
 public class Livro {
-	private int edicaoDoLivro;
 	private EditoraDoLivro editora;
 	private String nomeDoLivro;
-	private int anoDoLivro;	
+	private String anoDoLivro;	
+	private AutoresDoLivro autor;
+	private Exemplar exemplares;
 	private static int totalDeLivros = 0;
-	private Scanner ler;
+	private static Scanner ler;
 	
-	public Livro cadastrarLivro() {
+	public static Livro cadastrarLivro() {
 		Livro.setTotalDeLivros(Livro.getTotalDeLivros() + 1);
 		Livro cadastro = new Livro();
 		
@@ -19,26 +20,64 @@ public class Livro {
 		cadastro.setNomeDoLivro(nome);
 		
 		AutoresDoLivro autoria = new AutoresDoLivro();
+		
+		boolean verificadorAutor = true;
+		while(verificadorAutor) {
 		System.out.println("Digite o autor do livro");
 		nome = ler.nextLine();
 		autoria.setNomeDoAutor(nome);
-		
+		cadastro.setAutor(autoria);
+		System.out.println("Quer adicionar um novo autor?\n 1-Sim outro-não");
+		int resposta = Integer.parseInt(ler.nextLine());
+		System.out.println(resposta);
+		if (resposta!=1) 
+			verificadorAutor=false;
+		}
+		if (verificadorAutor) {
+			AutoresDoLivro novaAutoria = new AutoresDoLivro();
+			autoria.setProximo(novaAutoria);
+			autoria = novaAutoria;
+		}
 		System.out.println("Digite a edição do novo livro");
-		int edicao = ler.hashCode();
-		cadastro.setEdicaoDoLivro(edicao);
+		Exemplar novoExemplar = new Exemplar();
+		cadastro.setExemplares(novoExemplar);
+		String edicao = ler.nextLine();
+		cadastro.getExemplares().setEdicaoDoLivro(edicao);
+		
 		
 		System.out.println("Digite o ano do novo livro");
-		int ano = ler.hashCode();
+		String ano = ler.nextLine();
 		cadastro.setAnoDoLivro(ano);
 		
 		EditoraDoLivro editora = new EditoraDoLivro();
+		
 		System.out.println("Digite a editora do livro");
-		nome = ler.nextLine();
-		editora.setNomeDaEditora(nome);
+		String nomeEditora = ler.nextLine();
+		editora.setNomeDaEditora(nomeEditora);
+		cadastro.setEditora(editora);
+		
+		System.out.println("Digite a quantidade de exemplares do novo livro");
+		int exemplar = ler.nextInt();
+		cadastro.getExemplares().setNumeroDeExemplares(exemplar);
+		
+		System.out.println("Digite o número do código ISBN");
+		int codigoISBN = ler.nextInt();
+		cadastro.getExemplares().setCodigoISBN(codigoISBN);
 		
 		return cadastro;
 	}
 	
+	public static void imprimeLivro(Livro imprime) {
+		
+		System.out.println("O Livro "+imprime.getNomeDoLivro()+" do autor "+imprime.getAutor().getNomeDoAutor()+" e do ano "+imprime.getAnoDoLivro()+" é da editora "
+		+imprime.getEditora().getNomeDaEditora()+" e é a "+imprime.getExemplares().getEdicaoDoLivro()+" edição com "+imprime.getExemplares().getNumeroDeExemplares()+" exemplares e possui o código ISBN."
+		+imprime.getExemplares().getCodigoISBN());
+	}
+	
+	public static void alteraLivro(Livro altera) {
+		System.out.println("sobre o livro que deseja alterar: ");
+		imprimeLivro(altera);
+	}
 	
 	public void excluirLivro() {
 		
@@ -63,22 +102,15 @@ public class Livro {
 	}
 
 
-	public int getAnoDoLivro() {
+	public String getAnoDoLivro() {
 		return anoDoLivro;
 	}
 
 
-	public void setAnoDoLivro(int anoDoLivro) {
+	public void setAnoDoLivro(String anoDoLivro) {
 		this.anoDoLivro = anoDoLivro;
 	}
 
-	public int getEdicaoDoLivro() {
-		return edicaoDoLivro;
-	}
-
-	public void setEdicaoDoLivro(int edicaoDoLivro) {
-		this.edicaoDoLivro = edicaoDoLivro;
-	}
 
 
 	public static int getTotalDeLivros() {
@@ -88,6 +120,24 @@ public class Livro {
 
 	public static void setTotalDeLivros(int totalDeLivros) {
 		Livro.totalDeLivros = totalDeLivros;
+	}
+
+
+	public AutoresDoLivro getAutor() {
+		return autor;
+	}
+
+
+	public void setAutor(AutoresDoLivro autor) {
+		this.autor = autor;
+	}
+
+	public Exemplar getExemplares() {
+		return exemplares;
+	}
+
+	public void setExemplares(Exemplar exemplares) {
+		this.exemplares = exemplares;
 	}
 }
 
