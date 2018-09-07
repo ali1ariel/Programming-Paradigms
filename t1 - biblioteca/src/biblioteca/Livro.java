@@ -27,7 +27,7 @@ public class Livro {
 		nome = ler.nextLine();
 		autoria.setNomeDoAutor(nome);
 		cadastro.setAutor(autoria);
-		System.out.println("Quer adicionar um novo autor?\n 1-Sim outro-não");
+		System.out.println("Quer adicionar um novo autor?\n 1-Sim outro-nï¿½o");
 		int resposta = Integer.parseInt(ler.nextLine());
 		System.out.println(resposta);
 		if (resposta!=1) 
@@ -38,7 +38,7 @@ public class Livro {
 			autoria.setProximo(novaAutoria);
 			autoria = novaAutoria;
 		}
-		System.out.println("Digite a edição do novo livro");
+		System.out.println("Digite a ediï¿½ï¿½o do novo livro");
 		Exemplar novoExemplar = new Exemplar();
 		cadastro.setExemplares(novoExemplar);
 		String edicao = ler.nextLine();
@@ -57,11 +57,12 @@ public class Livro {
 		cadastro.setEditora(editora);
 		
 		System.out.println("Digite a quantidade de exemplares do novo livro");
-		int exemplar = ler.nextInt();
+		int exemplar = Integer.parseInt(ler.nextLine());
 		cadastro.getExemplares().setNumeroDeExemplares(exemplar);
 		
-		System.out.println("Digite o número do código ISBN");
-		int codigoISBN = ler.nextInt();
+		System.out.println("Digite o nï¿½mero do cï¿½digo ISBN");
+		int codigoISBN = Integer.parseInt(ler.nextLine());
+		
 		cadastro.getExemplares().setCodigoISBN(codigoISBN);
 		
 		return cadastro;
@@ -69,14 +70,15 @@ public class Livro {
 	
 	public static void imprimeLivro(Livro imprime) {
 		
-		System.out.println("O Livro "+imprime.getNomeDoLivro()+" do autor "+imprime.getAutor().getNomeDoAutor()+" e do ano "+imprime.getAnoDoLivro()+" é da editora "
-		+imprime.getEditora().getNomeDaEditora()+" e é a "+imprime.getExemplares().getEdicaoDoLivro()+" edição com "+imprime.getExemplares().getNumeroDeExemplares()+" exemplares e possui o código ISBN."
+		System.out.println("O Livro "+imprime.getNomeDoLivro()+" do autor "+imprime.getAutor().getNomeDoAutor()+" e do ano "+imprime.getAnoDoLivro()+" ï¿½ da editora "
+		+imprime.getEditora().getNomeDaEditora()+" e ï¿½ a "+imprime.getExemplares().getEdicaoDoLivro()+" ediï¿½ï¿½o com "+imprime.getExemplares().getNumeroDeExemplares()+" exemplares e possui o cï¿½digo ISBN."
 		+imprime.getExemplares().getCodigoISBN());
 	}
 	
 	public static void alteraLivro(Livro altera) {
 		System.out.println("sobre o livro que deseja alterar: ");
 		imprimeLivro(altera);
+		
 	}
 	
 	public void excluirLivro() {
