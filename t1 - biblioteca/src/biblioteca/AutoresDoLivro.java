@@ -1,8 +1,9 @@
 package biblioteca;
+import java.util.ArrayList;
 
 public class AutoresDoLivro {
 	private String nomeDoAutor;
-	private AutoresDoLivro proximo;
+//	static ArrayList<Livro>
 
 	public String getNomeDoAutor() {
 		return nomeDoAutor;
@@ -11,12 +12,10 @@ public class AutoresDoLivro {
 	public void setNomeDoAutor(String nomeDoAutor) {
 		this.nomeDoAutor = nomeDoAutor;
 	}
-
-	public AutoresDoLivro getProximo() {
-		return proximo;
-	}
-
-	public void setProximo(AutoresDoLivro proximo) {
-		this.proximo = proximo;
+	
+	@Override
+	public boolean equals(Object aux) {
+		AutoresDoLivro autor = (AutoresDoLivro) aux;
+		return this.nomeDoAutor.equals(autor.nomeDoAutor);
 	}
 }

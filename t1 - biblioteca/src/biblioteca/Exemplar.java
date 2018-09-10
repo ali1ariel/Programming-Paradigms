@@ -2,8 +2,8 @@ package biblioteca;
 
 public class Exemplar extends Livro {
 	private String edicaoDoLivro;
-	private int numeroDeExemplares;
-	private int codigoISBN;
+	private Integer numeroDeExemplares;
+	private Integer codigoISBN;
 	private Exemplar proximo;
 	
 	public String getEdicaoDoLivro() {
@@ -14,24 +14,22 @@ public class Exemplar extends Livro {
 		System.out.println(numeroDaEdicao);
 		this.edicaoDoLivro = numeroDaEdicao;
 	}
-	public int getNumeroDeExemplares() {
-		return numeroDeExemplares;
-	}
-	public void setNumeroDeExemplares(int numeroDeExemplares) {
-		super.setTotalDeLivros(super.getTotalDeLivros()+numeroDeExemplares);
-		this.numeroDeExemplares = numeroDeExemplares;
-	}
 	public Exemplar getProximo() {
 		return proximo;
 	}
 	public void setProximo(Exemplar proximo) {
 		this.proximo = proximo;
 	}
-	public int getCodigoISBN() {
+	public Integer getNumeroDeExemplares() {
+		return numeroDeExemplares;
+	}
+	public void setNumeroDeExemplares(Integer numeroDeExemplares) {
+		this.numeroDeExemplares = numeroDeExemplares;
+	}
+	public Integer getCodigoISBN() {
 		return codigoISBN;
 	}
-	public void setCodigoISBN(int codigoISBN) {
+	public void setCodigoISBN(Integer codigoISBN) {
 		this.codigoISBN = codigoISBN;
 	}
-
 }
