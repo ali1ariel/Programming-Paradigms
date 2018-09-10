@@ -1,0 +1,3 @@
+10/09 - 15:12.: No momento, está sendo criada a função de exclusão, a principal dificuldade é entender o relacionamento dos ArrayLists autorlivro e todosOsAutores.
+	
+	A função apagar livro apaga exemplares, se não houver mais exemplares apaga o Livro.

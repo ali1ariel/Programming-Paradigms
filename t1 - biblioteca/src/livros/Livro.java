@@ -111,8 +111,20 @@ public class Livro {
 		
 	}
 	
-	public void excluirLivro() {
-		
+	public void excluirLivro(Livro excluir) {
+		if (verificaExemplares(excluir.exemplaresArray)) {
+			for (Integer a = 0; a < excluir.autorArray.size();a++){
+				for(Integer b = 0; b < Livro.todosOsAutores.get(a).getLivrosDoAutor().size();b++) {
+					if(Livro.todosOsAutores.get(a).getLivrosDoAutor().get(b).getNomeDoLivro().equals(excluir.getNomeDoLivro())) {
+						System.out.println(Livro.todosOsAutores.get(a).getLivrosDoAutor().remove(excluir));
+					}
+				}
+			}
+			
+		return;
+		} 
+		System.out.println("Não é possível excluir pois há exemplares emprestados");
+		return;
 	}
 
 	public EditoraDoLivro getEditora() {
@@ -133,18 +145,6 @@ public class Livro {
 		this.nomeDoLivro = nomeDoLivro;
 	}
 
-
-	public String getAnoDoLivro() {
-		return anoDoLivro;
-	}
-
-
-	public void setAnoDoLivro(String anoDoLivro) {
-		this.anoDoLivro = anoDoLivro;
-	}
-
-
-
 	public static int getTotalDeLivros() {
 		return totalDeLivros;
 	}
@@ -153,12 +153,28 @@ public class Livro {
 	public static void setTotalDeLivros(int totalDeLivros) {
 		Livro.totalDeLivros = totalDeLivros;
 	}
+	
+	public boolean verificaExemplares(ArrayList<Exemplar> exemplares) {
+		for (Integer a = 0; a < exemplares.size();a++){
+			if(exemplares.get(a).getNumeroDeExemplares()!=exemplares.get(a).getExemplaresDisponiveis()) return false;
+		}
+		return true;
+	}
 }
 
 class NomeAutorComparator implements Comparator<AutoresDoLivro>{
 
 	public int compare(AutoresDoLivro autor1, AutoresDoLivro autor2) {
 		return autor1.getNomeDoAutor().compareTo(autor2.getNomeDoAutor());
+	}
+	
+	
+}
+
+class NomeLivroComparator implements Comparator<Livro>{
+
+	public int compare(Livro livro1, Livro livro2) {
+		return livro1.getNomeDoLivro().compareTo(livro2.getNomeDoLivro());
 	}
 	
 	
