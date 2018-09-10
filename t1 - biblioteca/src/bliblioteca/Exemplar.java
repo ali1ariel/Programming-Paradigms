@@ -1,4 +1,4 @@
-package biblioteca;
+package bliblioteca;
 
 public class Exemplar extends Livro {
 	private String edicaoDoLivro;

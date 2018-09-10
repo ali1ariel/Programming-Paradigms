@@ -1,4 +1,4 @@
-package biblioteca;
+package bliblioteca;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Scanner;
@@ -40,11 +40,11 @@ public class Livro {
 			if(todosOsAutores.contains(autoria)) {
 				System.out.println("funciou!!");
 				cadastro.autorArray.add(todosOsAutores.get(todosOsAutores.indexOf(autoria)));
-				System.out.println(cadastro.autorArray.get(todosOsAutores.indexOf(autoria)).getNomeDoAutor());
+				System.out.println(cadastro.autorArray.get(cadastro.autorArray.indexOf(autoria)).getNomeDoAutor());
 			}else {
 				todosOsAutores.add(autoria);
 				cadastro.autorArray.add(todosOsAutores.get(todosOsAutores.indexOf(autoria)));
-				System.out.println(cadastro.autorArray.get(todosOsAutores.indexOf(autoria)).getNomeDoAutor());
+				System.out.println(cadastro.autorArray.get(cadastro.autorArray.indexOf(autoria)).getNomeDoAutor());
 			}
 			System.out.println("Quer adicionar um novo autor?\n 1-Sim outro-n�o");
 			Integer resposta = Integer.valueOf(ler.nextLine());
