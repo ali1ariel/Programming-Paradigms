@@ -1,4 +1,4 @@
-package bliblioteca;
+package livros;
 import java.util.Scanner;
 
 public class UsuarioDaBiblioteca {

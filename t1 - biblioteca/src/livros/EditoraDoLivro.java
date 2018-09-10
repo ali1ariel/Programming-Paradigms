@@ -1,4 +1,4 @@
-package bliblioteca;
+package livros;
 
 public class EditoraDoLivro {
 	private String nomeDaEditora;

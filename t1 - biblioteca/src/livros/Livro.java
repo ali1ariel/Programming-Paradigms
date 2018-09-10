@@ -1,4 +1,4 @@
-package bliblioteca;
+package livros;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Scanner;
@@ -6,7 +6,6 @@ import java.util.Scanner;
 public class Livro {
 	private EditoraDoLivro editora;
 	private String nomeDoLivro;
-	private String anoDoLivro;	
 	ArrayList <AutoresDoLivro> autorArray;
 	ArrayList <Exemplar> exemplaresArray;
 	static ArrayList <AutoresDoLivro> todosOsAutores = new ArrayList<AutoresDoLivro>();;
@@ -24,11 +23,11 @@ public class Livro {
 		cadastro.autorArray = new ArrayList<AutoresDoLivro>();
 				
 		ler = new Scanner(System.in);
-		/*
+		
 		System.out.println("Digite o nome do novo Livro");
 		String nome = ler.nextLine();
 		cadastro.setNomeDoLivro(nome);
-		*/
+		
 				
 		AutoresDoLivro autoria = new AutoresDoLivro();
 		boolean verificadorAutor = true;
@@ -37,15 +36,12 @@ public class Livro {
 			autoria.setNomeDoAutor(ler.nextLine());
 	
 			
-			if(todosOsAutores.contains(autoria)) {
-				System.out.println("funciou!!");
+			if(!todosOsAutores.contains(autoria)) todosOsAutores.add(autoria);
+				
 				cadastro.autorArray.add(todosOsAutores.get(todosOsAutores.indexOf(autoria)));
-				System.out.println(cadastro.autorArray.get(cadastro.autorArray.indexOf(autoria)).getNomeDoAutor());
-			}else {
-				todosOsAutores.add(autoria);
-				cadastro.autorArray.add(todosOsAutores.get(todosOsAutores.indexOf(autoria)));
-				System.out.println(cadastro.autorArray.get(cadastro.autorArray.indexOf(autoria)).getNomeDoAutor());
-			}
+				cadastro.autorArray.get(cadastro.autorArray.indexOf(autoria)).getLivrosDoAutor().add(cadastro);
+				cadastro.autorArray.sort(organiza);
+			
 			System.out.println("Quer adicionar um novo autor?\n 1-Sim outro-nï¿½o");
 			Integer resposta = Integer.valueOf(ler.nextLine());
 			System.out.println(resposta);
@@ -56,18 +52,15 @@ public class Livro {
 			}
 			Livro.todosOsAutores.sort(organiza);
 		}
-		/*
 		System.out.println("Digite a ediï¿½ï¿½o do novo livro");
 		Exemplar novoExemplar = new Exemplar();
 		
 		novoExemplar.setEdicaoDoLivro(ler.nextLine());
 		
 		System.out.println("Digite o ano do novo livro");
-		String ano = ler.nextLine();
-		cadastro.setAnoDoLivro(ano);
-
+		novoExemplar.setAnoDoLivro(ler.nextLine());
 		
-		
+	
 		EditoraDoLivro editora = new EditoraDoLivro();
 		
 		System.out.println("Digite a editora do livro");
@@ -77,20 +70,39 @@ public class Livro {
 		
 		System.out.println("Digite a quantidade de exemplares do novo livro");
 		novoExemplar.setNumeroDeExemplares(Integer.parseInt(ler.nextLine()));
+		novoExemplar.setExemplaresDisponiveis(novoExemplar.getNumeroDeExemplares());
 		
 		System.out.println("Digite o nï¿½mero do cï¿½digo ISBN");
 		novoExemplar.setCodigoISBN(Integer.parseInt(ler.nextLine()));
 		
 		cadastro.exemplaresArray.add(novoExemplar);
-		*/
+		
 		return cadastro;
 	}
 	
 	public static void imprimeLivro(Livro imprime) {
 		
-		System.out.println("O Livro "+imprime.getNomeDoLivro()+" do autor "+imprime.autorArray.get(0).getNomeDoAutor()+" e do ano "+imprime.getAnoDoLivro()+" ï¿½ da editora "
-		+imprime.getEditora().getNomeDaEditora()+" e ï¿½ a "+imprime.exemplaresArray.get(0).getEdicaoDoLivro()+" ediï¿½ï¿½o com "+imprime.exemplaresArray.get(0).getNumeroDeExemplares()+" exemplares e possui o cï¿½digo ISBN."
-		+imprime.exemplaresArray.get(0).getCodigoISBN());
+		
+		System.out.print("O Livro "+imprime.getNomeDoLivro());
+		if(imprime.autorArray.size()>1) {
+			System.out.println(" dos autores:");
+			for(Integer a=0; a < imprime.autorArray.size(); a++)
+			{
+				System.out.println(imprime.autorArray.get(a).getNomeDoAutor());
+			}
+		} else {
+			System.out.println(" do autor: "+imprime.autorArray.get(0).getNomeDoAutor());
+		}
+		System.out.print("da editora: "+imprime.getEditora().getNomeDaEditora());
+		if(imprime.exemplaresArray.size()>1) {
+			System.out.println(" e com os seguintes exemplares:");
+		} else {
+			System.out.println(" e com o exemplar:");
+		}
+		
+		for (Integer a = 0;a<imprime.exemplaresArray.size();a++) {
+			System.out.println("Edição: "+imprime.exemplaresArray.get(a).getEdicaoDoLivro()+", do ano: "+imprime.exemplaresArray.get(a).getAnoDoLivro()+" e do código ISBN: "+imprime.exemplaresArray.get(a).getCodigoISBN()+"\n Tem "+imprime.exemplaresArray.get(a).getExemplaresDisponiveis()+" de "+imprime.exemplaresArray.get(a).getNumeroDeExemplares()+" exemplares disponíveis.");
+		}
 	}
 	
 	public static void alteraLivro(Livro altera) {

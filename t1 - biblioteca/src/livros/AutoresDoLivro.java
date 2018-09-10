@@ -1,10 +1,10 @@
-package bliblioteca;
+package livros;
 
 import java.util.ArrayList;
 
 public class AutoresDoLivro {
 	private String nomeDoAutor;
-	static ArrayList<Livro> livrosDoAutor = new ArrayList<Livro>();
+	private ArrayList<Livro> livrosDoAutor = new ArrayList<Livro>();
 
 	public String getNomeDoAutor() {
 		return nomeDoAutor;
@@ -19,5 +19,9 @@ public class AutoresDoLivro {
 		AutoresDoLivro autor = (AutoresDoLivro) aux;
 		return this.nomeDoAutor.equals(autor.nomeDoAutor);
 	}
-	
+
+	public ArrayList<Livro> getLivrosDoAutor() {
+		return livrosDoAutor;
+	}
+
 }

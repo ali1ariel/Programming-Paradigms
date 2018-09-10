@@ -1,9 +1,11 @@
-package bliblioteca;
+package livros;
 
 public class Exemplar extends Livro {
 	private String edicaoDoLivro;
+	private String anoDoLivro;
 	private Integer numeroDeExemplares;
 	private Integer codigoISBN;
+	private Integer exemplaresDisponiveis;
 	private Exemplar proximo;
 	
 	public String getEdicaoDoLivro() {
@@ -14,6 +16,14 @@ public class Exemplar extends Livro {
 		System.out.println(numeroDaEdicao);
 		this.edicaoDoLivro = numeroDaEdicao;
 	}
+	
+	public String getAnoDoLivro() {
+		return anoDoLivro;
+	}
+	public void setAnoDoLivro(String ano) {
+		this.anoDoLivro = ano;
+	}
+	
 	public Exemplar getProximo() {
 		return proximo;
 	}
@@ -31,5 +41,11 @@ public class Exemplar extends Livro {
 	}
 	public void setCodigoISBN(Integer codigoISBN) {
 		this.codigoISBN = codigoISBN;
+	}
+	public Integer getExemplaresDisponiveis() {
+		return exemplaresDisponiveis;
+	}
+	public void setExemplaresDisponiveis(Integer exemplaresDisponiveis) {
+		this.exemplaresDisponiveis = exemplaresDisponiveis;
 	}
 }
