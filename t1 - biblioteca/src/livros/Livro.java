@@ -4,8 +4,9 @@ import java.util.Comparator;
 import java.util.Scanner;
 
 public class Livro {
-	private EditoraDoLivro editora;
+	
 	private String nomeDoLivro;
+	private EditoraDoLivro editora;
 	ArrayList <AutoresDoLivro> autorArray;
 	ArrayList <Exemplar> exemplaresArray;
 	static ArrayList <AutoresDoLivro> todosOsAutores = new ArrayList<AutoresDoLivro>();;

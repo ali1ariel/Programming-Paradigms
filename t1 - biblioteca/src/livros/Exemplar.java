@@ -1,4 +1,7 @@
 package livros;
+import java.util.ArrayList;
+
+import usuarios.Usuario;
 
 public class Exemplar extends Livro {
 	private String edicaoDoLivro;
@@ -6,7 +9,7 @@ public class Exemplar extends Livro {
 	private Integer numeroDeExemplares;
 	private Integer codigoISBN;
 	private Integer exemplaresDisponiveis;
-	private Exemplar proximo;
+	private ArrayList<Usuario> usuarioQueEmprestou;
 	
 	public String getEdicaoDoLivro() {
 		return edicaoDoLivro;
@@ -47,5 +50,11 @@ public class Exemplar extends Livro {
 	}
 	public void setExemplaresDisponiveis(Integer exemplaresDisponiveis) {
 		this.exemplaresDisponiveis = exemplaresDisponiveis;
+	}
+	public ArrayList<Usuario> getUsuarioQueEmprestou() {
+		return usuarioQueEmprestou;
+	}
+	public void setUsuarioQueEmprestou(ArrayList<Usuario> usuarioQueEmprestou) {
+		this.usuarioQueEmprestou = usuarioQueEmprestou;
 	}
 }

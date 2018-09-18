@@ -1,12 +1,12 @@
 package usuarios;
 import java.util.ArrayList;
-import livros.Livro;
 
 public class Usuario {
 	private String nomeDoUsuario;
-	private String loginDoUsuario;
-	private String senhaDoUsuario;
-	private ArrayList<Livro> livrosEmprestados = new ArrayList<Livro>();
+	private Login user;
+	private ArrayList<LivrosClassificacao> livrosEmprestados = new ArrayList<LivrosClassificacao>();
+	private boolean professor;
+	private Integer multa;
 	
 
 	public String getNomeDoUsuario() {
@@ -18,19 +18,51 @@ public class Usuario {
 	}
 
 	public String getLoginDoUsuario() {
-		return loginDoUsuario;
+		return this.user.getUser();
 	}
 
 	public void setLoginDoUsuario(String loginDoUsuario) {
-		this.loginDoUsuario = loginDoUsuario;
+		this.user.setUser(loginDoUsuario);
 	}
 
 	public String getSenhaDoUsuario() {
-		return senhaDoUsuario;
+		return this.user.getPassword();
 	}
 
 	public void setSenhaDoUsuario(String senhaDoUsuario) {
-		this.senhaDoUsuario = senhaDoUsuario;
+		this.user.setPassword(senhaDoUsuario);
+	}
+
+	public Login getUser() {
+		return user;
+	}
+
+	public void setUser(Login user) {
+		this.user = user;
+	}
+
+	public ArrayList<LivrosClassificacao> getLivrosEmprestados() {
+		return livrosEmprestados;
+	}
+
+	public void setLivrosEmprestados(ArrayList<LivrosClassificacao> livrosEmprestados) {
+		this.livrosEmprestados = livrosEmprestados;
+	}
+
+	public boolean isProfessor() {
+		return professor;
+	}
+
+	public void setProfessor(boolean professor) {
+		this.professor = professor;
+	}
+
+	public Integer getMulta() {
+		return multa;
+	}
+
+	public void setMulta(Integer multa) {
+		this.multa = multa;
 	}
 	
 }
