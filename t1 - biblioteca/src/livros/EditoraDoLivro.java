@@ -7,7 +7,7 @@ import java.util.Scanner;
 public class EditoraDoLivro {
 	private String nomeDaEditora;
 	private ArrayList<Livro> livrosDaEditora = new ArrayList<Livro>();
-	static Scanner ler;	
+	static Scanner ler = new Scanner(System.in);	
 	
 	public static void adicionarEditora(Livro cadastro, String nomeEditora) {
 		
@@ -47,25 +47,25 @@ public class EditoraDoLivro {
 		return;		
 	}
 	
-	public static void listarLivrosEditora() {
+	public static Livro listarLivrosEditora() {
 		
 		ArrayList<Livro> editoraLivrosArray = new ArrayList<Livro>();
 		
-		ler = new Scanner(System.in);
 		
 		System.out.print("digite o nome da editora: ");
 		String editora = ler.nextLine();
 		for (Integer a = 0; a.intValue() < Livro.todosOsLivros.size();a++) {
-			if(Livro.todosOsLivros.get(a).getNomeDoLivro().equals(editora)) {
+			if(Livro.todosOsLivros.get(a).getEditora().getNomeDaEditora().equals(editora)) {
 				editoraLivrosArray.add(Livro.todosOsLivros.get(a));
 			}
 		}
 		if(editoraLivrosArray.size()==0) {
 			System.out.println("editora não encontrada.");
-			return;
+			return null;
 		}
 		System.out.println("Os livros da editora selecionada são:");
-		Livro.imprimeTodosOsLivros(editoraLivrosArray);
+		
+		return Livro.buscaPorOrdem(editoraLivrosArray);
 		
 		
 	}

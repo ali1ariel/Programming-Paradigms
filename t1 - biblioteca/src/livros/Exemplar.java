@@ -139,7 +139,6 @@ public class Exemplar extends Livro {
 	}
 	public void setEdicaoDoLivro(String edicao) {
 		String numeroDaEdicao = (edicao+"ª");
-		System.out.println(numeroDaEdicao);
 		this.edicaoDoLivro = numeroDaEdicao;
 	}
 	public String getAnoDoLivro() {

@@ -9,10 +9,7 @@ public class TesteLivros extends Livro {
 	public static void main(String[] args) {
 		
 		criaLivro();
-		
-		alteraLivro();
-	System.out.println("FIMM!");
-	imprimeTodosOsLivros();
+		menu(todosOsLivros);
 	}
 	
 	
@@ -41,7 +38,6 @@ public class TesteLivros extends Livro {
 					
 		Livro.todosOsAutores.sort(organiza);
 		
-		System.out.println("Digite a editora do livro");
 		String nomeEditora = "Perseus";
 				
 		EditoraDoLivro.adicionarEditora(cadastro, nomeEditora);
@@ -101,7 +97,7 @@ public class TesteLivros extends Livro {
 		cadastro.exemplaresArray.add(novoExemplar);	
 		
 		todosOsLivros.add(cadastro);Livro.setTotalDeLivros(Livro.getTotalDeLivros() + 1);
-		// ----
+		// ------ Livro com 2 exemplares
 		cadastro = new Livro();
 		
 		cadastro.exemplaresArray = new ArrayList<Exemplar>();
@@ -137,50 +133,21 @@ public class TesteLivros extends Livro {
 		
 		cadastro.exemplaresArray.add(novoExemplar);	
 		
-		todosOsLivros.add(cadastro);
-		
-		//----------------2
-		cadastro = new Livro();
-		
-		Livro.setTotalDeLivros(Livro.getTotalDeLivros() + 1);
-		
-		cadastro.exemplaresArray = new ArrayList<Exemplar>();
-		cadastro.autorArray = new ArrayList<AutoresDoLivro>();
-				
-		nome = "Pietro";
-		cadastro.setNomeDoLivro(nome);
-						
-		autoria = new AutoresDoLivro();
-	
-		autoria.setNomeDoAutor("2Chains");
-		
-
-		Livro.todosOsAutores.add(autoria);
-		cadastro.autorArray.add(Livro.todosOsAutores.get(Livro.todosOsAutores.indexOf(autoria)));
-		cadastro.autorArray.get(cadastro.autorArray.indexOf(autoria)).getLivrosDoAutor().add(cadastro);
-		cadastro.autorArray.sort(organiza);
-					
-		Livro.todosOsAutores.sort(organiza);
-		
-		nomeEditora = "Perseus";
-				
-		EditoraDoLivro.adicionarEditora(cadastro, nomeEditora);
-		
-		
 		novoExemplar = new Exemplar();
 		
-		novoExemplar.setEdicaoDoLivro("8");
+		novoExemplar.setEdicaoDoLivro("2");
 		
-		novoExemplar.setAnoDoLivro("2011");
-		novoExemplar.setNumeroDeExemplares(Integer.parseInt("43"));
+		novoExemplar.setAnoDoLivro("2007");
+		novoExemplar.setNumeroDeExemplares(Integer.parseInt("7"));
 		novoExemplar.setExemplaresDisponiveis(novoExemplar.getNumeroDeExemplares());
 		
-		novoExemplar.setCodigoISBN(Integer.parseInt("365244"));
+		novoExemplar.setCodigoISBN(Integer.parseInt("34419"));
 		
 		cadastro.exemplaresArray.add(novoExemplar);	
 		
-		todosOsLivros.add(cadastro);
 		
+		todosOsLivros.add(cadastro);
+	
 		//--------------------3
 		cadastro = new Livro();
 		
