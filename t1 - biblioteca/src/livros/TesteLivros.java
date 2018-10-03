@@ -20,7 +20,7 @@ public class TesteLivros extends Livro {
 		Livro.setTotalDeLivros(Livro.getTotalDeLivros() + 1);
 		Livro cadastro = new Livro();
 		
-		cadastro.exemplaresArray = new ArrayList<Exemplar>();
+		cadastro.setExemplaresArray(new ArrayList<Exemplar>());
 		cadastro.autorArray = new ArrayList<AutoresDoLivro>();
 				
 		String nome = "Amoedo";
@@ -53,7 +53,7 @@ public class TesteLivros extends Livro {
 		
 		novoExemplar.setCodigoISBN(Integer.parseInt("34464"));
 		
-		cadastro.exemplaresArray.add(novoExemplar);	
+		cadastro.getExemplaresArray().add(novoExemplar);	
 		
 		todosOsLivros.add(cadastro);
 		//____________1
@@ -62,7 +62,7 @@ public class TesteLivros extends Livro {
 		
 		Livro.setTotalDeLivros(Livro.getTotalDeLivros() + 1);
 		
-		cadastro.exemplaresArray = new ArrayList<Exemplar>();
+		cadastro.setExemplaresArray(new ArrayList<Exemplar>());
 		cadastro.autorArray = new ArrayList<AutoresDoLivro>();
 				
 		nome = "SCharls";
@@ -94,13 +94,13 @@ public class TesteLivros extends Livro {
 		
 		novoExemplar.setCodigoISBN(Integer.parseInt("3454"));
 		
-		cadastro.exemplaresArray.add(novoExemplar);	
+		cadastro.getExemplaresArray().add(novoExemplar);	
 		
 		todosOsLivros.add(cadastro);Livro.setTotalDeLivros(Livro.getTotalDeLivros() + 1);
 		// ------ Livro com 2 exemplares
 		cadastro = new Livro();
 		
-		cadastro.exemplaresArray = new ArrayList<Exemplar>();
+		cadastro.setExemplaresArray(new ArrayList<Exemplar>());
 		cadastro.autorArray = new ArrayList<AutoresDoLivro>();
 				
 		nome = "Silvan";
@@ -131,7 +131,7 @@ public class TesteLivros extends Livro {
 		
 		novoExemplar.setCodigoISBN(Integer.parseInt("34454"));
 		
-		cadastro.exemplaresArray.add(novoExemplar);	
+		cadastro.getExemplaresArray().add(novoExemplar);	
 		
 		novoExemplar = new Exemplar();
 		
@@ -143,7 +143,7 @@ public class TesteLivros extends Livro {
 		
 		novoExemplar.setCodigoISBN(Integer.parseInt("34419"));
 		
-		cadastro.exemplaresArray.add(novoExemplar);	
+		cadastro.getExemplaresArray().add(novoExemplar);	
 		
 		
 		todosOsLivros.add(cadastro);
@@ -153,7 +153,7 @@ public class TesteLivros extends Livro {
 		
 		Livro.setTotalDeLivros(Livro.getTotalDeLivros() + 1);
 		
-		cadastro.exemplaresArray = new ArrayList<Exemplar>();
+		cadastro.setExemplaresArray(new ArrayList<Exemplar>());
 		cadastro.autorArray = new ArrayList<AutoresDoLivro>();
 				
 		nome = "Loraab";
@@ -186,7 +186,7 @@ public class TesteLivros extends Livro {
 		
 		novoExemplar.setCodigoISBN(Integer.parseInt("344454"));
 		
-		cadastro.exemplaresArray.add(novoExemplar);	
+		cadastro.getExemplaresArray().add(novoExemplar);	
 		
 		todosOsLivros.add(cadastro);
 		

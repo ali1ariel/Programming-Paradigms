@@ -2,12 +2,12 @@ package usuarios;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import livros.Livro;
+import livros.*;
 
 public class Usuario {
 	private String nomeDoUsuario;
 	private Login user;
-	private ArrayList<Livro> livrosEmprestados = new ArrayList<Livro>();
+	private ArrayList<Exemplar> livrosEmprestados = new ArrayList<Exemplar>();
 	private boolean professor;
 	private Integer multa = 0;
 	private static Integer totalDeUsuarios = 0;
@@ -25,7 +25,7 @@ public class Usuario {
 				
 		cadastro.setUser(Login.defineLogin());
 		
-		System.out.println("O usuário é um aluno ou professor? (1) - Aluno, (outro) - professor");
+		System.out.println("O usuï¿½rio ï¿½ um aluno ou professor? (1) - Aluno, (outro) - professor");
 		if(Integer.parseInt(ler.nextLine())==1) {
 			cadastro.setProfessor(false);
 		} else {
@@ -40,12 +40,12 @@ public class Usuario {
 	public static void excluirUsuario(Usuario excluir) {
 			
 		if (excluir.getLivrosEmprestados().size()>0) {
-			System.out.println("Não é possível excluir esse usuário, pois apresenta livros ainda emprestados.");
+			System.out.println("Nï¿½o ï¿½ possï¿½vel excluir esse usuï¿½rio, pois apresenta livros ainda emprestados.");
 			return;
 		}
 		
 		if (excluir.getMulta().intValue()>0) {
-			System.out.println("Não é possível excluir esse usuário, pois apresenta multas vencidas.");
+			System.out.println("Nï¿½o ï¿½ possï¿½vel excluir esse usuï¿½rio, pois apresenta multas vencidas.");
 			return;
 		}
 		
@@ -56,22 +56,22 @@ public class Usuario {
 
 	public static void listarUsuarios (ArrayList<Usuario> imprime) {
 	for(Integer a = 0; a.intValue() < imprime.size();a++) {
-		System.out.print("O usuário "+a.intValue());
+		System.out.print("O usuï¿½rio "+a.intValue());
 		imprimeUsuario(imprime.get(a));
 	}
 }
 	
 	public static void imprimeUsuario (Usuario imprime) {
-		System.out.print(" se chama: "+imprime.getNomeDoUsuario()+" e seu login é: "+imprime.getUser().getUserName());
-		if(imprime.isProfessor()) System.out.println(" e é professor.");
-		else System.out.println(" e é aluno.");
+		System.out.print(" se chama: "+imprime.getNomeDoUsuario()+" e seu login ï¿½: "+imprime.getUser().getUserName());
+		if(imprime.isProfessor()) System.out.println(" e ï¿½ professor.");
+		else System.out.println(" e ï¿½ aluno.");
 	}
 	
 	public static Usuario buscaUsuario () {
 		
 		Usuario usuarioBuscado = null;
 		
-		System.out.println("Você gostaria de buscar por nome ou pelo login? (1) - Nome, (outro) - Login");
+		System.out.println("Vocï¿½ gostaria de buscar por nome ou pelo login? (1) - Nome, (outro) - Login");
 		Integer option = Integer.parseInt(ler.nextLine());
 		
 		System.out.println("Digite o Nome/Login buscado");
@@ -110,10 +110,10 @@ public class Usuario {
 		if(buscas.size()==1) return buscas.get(0);
 		else {
 			listarUsuarios(buscas);
-			System.out.println("selecione o índice do usuário buscado");
+			System.out.println("selecione o ï¿½ndice do usuï¿½rio buscado");
 			Integer selecionado = Integer.parseInt(ler.nextLine());
 			if(!(selecionado<buscas.size())) {
-				System.out.println("usuário Inválido");
+				System.out.println("usuï¿½rio Invï¿½lido");
 				return null;
 			}
 			return buscas.get(selecionado);
@@ -121,65 +121,42 @@ public class Usuario {
 		
 	}
 	
+	
 	//GETTERS AND SETTERS
 	public String getNomeDoUsuario() {
 		return nomeDoUsuario;
 	}
-
 	public void setNomeDoUsuario(String nomeDoUsuario) {
 		this.nomeDoUsuario = nomeDoUsuario;
 	}
-
 	public boolean isProfessor() {
 		return professor;
 	}
-
 	public void setProfessor(boolean professor) {
 		this.professor = professor;
 	}
-
 	public Integer getMulta() {
 		return multa;
 	}
-
 	public void setMulta(Integer multa) {
 		this.multa = multa;
 	}
-
-
-
-
 	public static Integer getTotalDeUsuarios() {
 		return totalDeUsuarios;
 	}
-
-
-
-
 	public static void setTotalDeUsuarios(Integer totalDeUsuarios) {
 		Usuario.totalDeUsuarios = totalDeUsuarios;
 	}
-
-
-
-
 	public Login getUser() {
 		return user;
 	}
-
-
-
-
 	public void setUser(Login user) {
 		this.user = user;
 	}
-
-	public ArrayList<Livro> getLivrosEmprestados() {
+	public ArrayList<Exemplar> getLivrosEmprestados() {
 		return livrosEmprestados;
 	}
-
-	public void setLivrosEmprestados(ArrayList<Livro> livrosEmprestados) {
+	public void setLivrosEmprestados(ArrayList<Exemplar> livrosEmprestados) {
 		this.livrosEmprestados = livrosEmprestados;
 	}
-	
 }

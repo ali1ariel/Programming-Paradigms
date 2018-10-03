@@ -1,6 +1,5 @@
 package livros;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.Scanner;
 
 public class Livro {
@@ -8,7 +7,7 @@ public class Livro {
 	private String nomeDoLivro;
 	private EditoraDoLivro editora;
 	ArrayList <AutoresDoLivro> autorArray;
-	ArrayList <Exemplar> exemplaresArray;
+	private ArrayList <Exemplar> exemplaresArray;
 	static ArrayList <AutoresDoLivro> todosOsAutores = new ArrayList<AutoresDoLivro>();
 	static ArrayList <EditoraDoLivro> todasAsEditoras = new ArrayList<EditoraDoLivro>();
 	static ArrayList<Livro> todosOsLivros = new ArrayList<Livro>();
@@ -17,10 +16,10 @@ public class Livro {
 	
 	public static void cadastrarLivro() {
 		
-		Livro.setTotalDeLivros(Livro.getTotalDeLivros() + 1);
+		Livro.setTotalDeLivros(getTotalDeLivros()+1);
 		Livro cadastro = new Livro();
 		
-		cadastro.exemplaresArray = new ArrayList<Exemplar>();
+		cadastro.setExemplaresArray(new ArrayList<Exemplar>());
 		cadastro.autorArray = new ArrayList<AutoresDoLivro>();
 		
 		
@@ -44,6 +43,7 @@ public class Livro {
 	public static void menu(ArrayList<Livro> livroArray) {
 		
 		do {
+			System.out.println("A biblioteca contém "+totalDeLivros.intValue()+" livros.");
 			System.out.println("O que gostaria de fazer? \n (1) - Adicionar um novo livro. (2) - Lidar com um existente. (3) - Imprimir livros.");
 			switch (Integer.parseInt(ler.nextLine())) {
 			case 1:
@@ -133,8 +133,8 @@ public class Livro {
 		System.out.print("digite o ISBN: ");
 		Integer buscando = Integer.parseInt(ler.nextLine());
 		for(Integer a = 0; a.intValue() < busca.size();a++) {
-			for(Integer b = 0; b.intValue() < busca.get(a).exemplaresArray.size();b++) {
-				if(busca.get(a).exemplaresArray.get(b).getCodigoISBN().equals(buscando)) return busca.get(a);
+			for(Integer b = 0; b.intValue() < busca.get(a).getExemplaresArray().size();b++) {
+				if(busca.get(a).getExemplaresArray().get(b).getCodigoISBN().equals(buscando)) return busca.get(a);
 			}
 		}
 		
@@ -248,7 +248,7 @@ public class Livro {
 	public static void excluirLivro(Livro excluir) {
 		
 		
-		if (Exemplar.verificaExemplares(excluir.exemplaresArray)) { // verifica se há livros emprestados.
+		if (Exemplar.verificaExemplares(excluir.getExemplaresArray())) { // verifica se há livros emprestados.
 			
 			for (Integer a = 0; a < excluir.autorArray.size();a++){ //mexe com os autores do livro, 1 de cada vez.
 				for(Integer b = 0; b < Livro.todosOsAutores.get(a).getLivrosDoAutor().size();b++) { //acha o livro dentro do vetor de livros do autor.
@@ -297,14 +297,14 @@ public class Livro {
 	public static void setTotalDeLivros(int totalDeLivros) {
 		Livro.totalDeLivros = totalDeLivros;
 	}
-}
 
-class NomeLivroComparator implements Comparator<Livro>{
-
-	public int compare(Livro livro1, Livro livro2) {
-		return livro1.getNomeDoLivro().compareTo(livro2.getNomeDoLivro());
+	public ArrayList <Exemplar> getExemplaresArray() {
+		return exemplaresArray;
 	}
-	
+
+	public void setExemplaresArray(ArrayList <Exemplar> exemplaresArray) {
+		this.exemplaresArray = exemplaresArray;
+	}
 	
 }
 
