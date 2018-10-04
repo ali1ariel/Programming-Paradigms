@@ -6,11 +6,11 @@ public class Livro {
 	
 	private String nomeDoLivro;
 	private EditoraDoLivro editora;
-	ArrayList <AutoresDoLivro> autorArray;
+	private ArrayList <AutoresDoLivro> autorArray;
 	private ArrayList <Exemplar> exemplaresArray;
-	static ArrayList <AutoresDoLivro> todosOsAutores = new ArrayList<AutoresDoLivro>();
-	static ArrayList <EditoraDoLivro> todasAsEditoras = new ArrayList<EditoraDoLivro>();
-	static ArrayList<Livro> todosOsLivros = new ArrayList<Livro>();
+	private static ArrayList <AutoresDoLivro> todosOsAutores = new ArrayList<AutoresDoLivro>();
+	private static ArrayList <EditoraDoLivro> todasAsEditoras = new ArrayList<EditoraDoLivro>();
+	private static ArrayList<Livro> todosOsLivros = new ArrayList<Livro>();
 	private static Integer totalDeLivros = 0;
 	static Scanner ler = new Scanner(System.in);
 	
@@ -55,7 +55,7 @@ public class Livro {
 					break;
 				}
 					System.out.println("O livro selecionado foi:");
-					imprimeLivro(selecionado);
+					imprimeInformaçõesLivro(selecionado);
 					System.out.println("O que deseja fazer com o livro selecionado? (1) - Excluir, (2) - Editar");
 					switch (Integer.parseInt(ler.nextLine())) {
 					
@@ -91,80 +91,102 @@ public class Livro {
 		Livro selecionado = null;
 		System.out.println("Deseja buscar o livro por: (1) - Nome, (2) - Editora, (3) - Código ISBN, (4) - Por índice de todos os livros.");
 		
-		switch (Integer.parseInt(ler.nextLine())) {
-		case 1: 
-			selecionado = buscaPorNomeDoLivro(busca);
-			if(selecionado == null) {
-				System.out.println("O livro com esse nome não foi encontrado.");
+		ArrayList<Livro> buscas = new ArrayList<Livro>();
+		String buscador = new String();
+		
+		Integer option = Integer.parseInt(ler.nextLine());
+		
+		if(option<1||option>4) {
+			System.out.println("Opção inválida");
+			return null;
+		}else if (option < 4) {
+		
+			switch(option) {
+				case 1: {
+					System.out.println("digite o nome do livro:");
+					break;
+				}
+				case 2: {
+					System.out.println("digite a editora do livro:");
+					break;
+				}
+				case 3: {
+					System.out.println("digite o código ISBN do livro:");
+					break;
+				}
 			}
-			break;
-		case 2:
-			
-			selecionado = EditoraDoLivro.listarLivrosEditora();
-			if(selecionado == null) {
-				System.out.println("nenhum livro retornado dessa busca por editora.");
+			buscador = ler.nextLine();
+		
+		
+			for(Integer a = 0; a.intValue() < busca.size();a++) {
+				switch (option) {
+					case 1:{ 
+						selecionado = buscaPorNomeDoLivro(busca.get(a), buscador);
+						if(selecionado != null) {
+							buscas.add(selecionado);
+						}
+						break;
+					}
+					case 2:{					
+						selecionado = EditoraDoLivro.listarLivrosEditora(busca.get(a), buscador);
+						if(selecionado != null) {
+							buscas.add(selecionado);
+						}
+						break;
+					}
+					case 3:{
+						for(Integer b = 0; b.intValue() < busca.get(a).getExemplaresArray().size();b++) {
+							selecionado = busca.get(a);
+							if(buscaPorISBN(selecionado.getExemplaresArray().get(b), Integer.parseInt(buscador))) {
+								buscas.add(selecionado);
+							}
+						}
+						break;
+					}	
+				}
+				if ((option==3) && (!(buscas.isEmpty()))) break;
 			}
-			break;
 			
-		case 3:
-			selecionado = buscaPorISBN(todosOsLivros);
-			if(selecionado == null) {
-				System.out.println("nenhum livro retornado dessa busca por ISBN.");
-			}
-			break;
-			
-		case 4:
+		}
+		else {
 			selecionado = buscaPorOrdem(todosOsLivros);
 			if(selecionado == null) {
 				System.out.println("nenhum livro retornado dessa busca.");
 			}
-			break;
+			return selecionado;
 		}
 		
-		return selecionado;
-	}
-	public static Livro buscaPorISBN (ArrayList<Livro> busca) {
-		Livro selecionado = null;
-		
-		System.out.println("Quer ver todos os livros antes de digitar o ISBN? (1) - Sim, (outro) - Não" );
-		if(Integer.parseInt(ler.nextLine())==1) {
-			imprimeTodosOsLivros(todosOsLivros);
-		}
-		System.out.print("digite o ISBN: ");
-		Integer buscando = Integer.parseInt(ler.nextLine());
-		for(Integer a = 0; a.intValue() < busca.size();a++) {
-			for(Integer b = 0; b.intValue() < busca.get(a).getExemplaresArray().size();b++) {
-				if(busca.get(a).getExemplaresArray().get(b).getCodigoISBN().equals(buscando)) return busca.get(a);
-			}
-		}
-		
-		return selecionado;
-	}
-	public static Livro buscaPorNomeDoLivro (ArrayList<Livro> busca) {
-		
-		ArrayList<Livro> buscas = new ArrayList<Livro>();
-		
-		System.out.println("Qual o nome do Livro?");
-		
-		String buscador = ler.nextLine();
-				
-		for (Integer a = 0; a.intValue() < busca.size();a++) {
-			if(busca.get(a).getNomeDoLivro().contains(buscador)) {
-				buscas.add(busca.get(a));
-			}
-		}
 		if (buscas.size()<1) return null;
-		if(buscas.size()==1) return buscas.get(0);
+		if(buscas.size()==1) {
+			return buscas.get(0);
+		}
 		else {
 			imprimeTodosOsLivros(buscas);
 			System.out.println("selecione o índice do livro buscado");
-			Integer selecionado = Integer.parseInt(ler.nextLine());
-			if(!(selecionado<buscas.size())) {
+			Integer selecao = Integer.parseInt(ler.nextLine());
+			if(!(selecao<buscas.size())) {
 				System.out.println("Livro Inválido");
 				return null;
 			}
-			return buscas.get(selecionado);
+			return buscas.get(selecao);
 		}
+	}
+
+
+	public static boolean buscaPorISBN (Exemplar confere, Integer buscando) {
+				
+		if(confere.getCodigoISBN().equals(buscando)) return true;
+		
+		return false;
+	}
+	
+	public static Livro buscaPorNomeDoLivro (Livro confere, String buscador) {
+	
+		if(confere.getNomeDoLivro().contains(buscador))
+		{
+				return confere;
+		}
+		else return null;
 	}
 	
 	public static Livro buscaPorOrdem (ArrayList<Livro> busca) {
@@ -180,23 +202,24 @@ public class Livro {
 		
 	}
 	
-	public static void imprimeLivro(Livro imprime) {
+	
+	public static void imprimeInformaçõesLivro (Livro imprime) {
 		
 		System.out.print(imprime.getNomeDoLivro());
 		
 		AutoresDoLivro.imprimeAutorDoLivro(imprime);
 		
-		System.out.print("da editora: "+imprime.getEditora().getNomeDaEditora()+".");
-		
-		Exemplar.imprimeExemplaresDoLivro(imprime);
-		System.out.println("_______________________");
-		
+		System.out.println("da editora: "+imprime.getEditora().getNomeDaEditora()+".");
 	}
 
 	public static void imprimeTodosOsLivros(ArrayList<Livro> imprime) {
 		for(Integer a = 0; a.intValue() < imprime.size();a++) {
+			
 			System.out.print("O livro ("+a+") - ");
-			imprimeLivro(imprime.get(a));
+			imprimeInformaçõesLivro(imprime.get(a));
+			Exemplar.imprimeExemplaresDoLivro(imprime.get(a));
+			System.out.println("_______________________");	
+			
 		}
 	}
 	
@@ -233,7 +256,7 @@ public class Livro {
 				
 			}if(Livro.todosOsLivros.contains(altera)) {
 				System.out.println("As alterações resultaram em:");
-				imprimeLivro(altera);
+				imprimeInformaçõesLivro(altera);
 				System.out.println("deseja modificar mais alguma coisa? 1 - sim, outro - não");
 				if(Integer.parseInt(ler.nextLine())!=1) break;
 			}else {
@@ -304,6 +327,42 @@ public class Livro {
 
 	public void setExemplaresArray(ArrayList <Exemplar> exemplaresArray) {
 		this.exemplaresArray = exemplaresArray;
+	}
+
+	public ArrayList<AutoresDoLivro> getAutorArray() {
+		return autorArray;
+	}
+
+	public void setAutorArray(ArrayList<AutoresDoLivro> autorArray) {
+		this.autorArray = autorArray;
+	}
+
+	public static ArrayList<AutoresDoLivro> getTodosOsAutores() {
+		return todosOsAutores;
+	}
+
+	public static void setTodosOsAutores(ArrayList<AutoresDoLivro> todosOsAutores) {
+		Livro.todosOsAutores = todosOsAutores;
+	}
+
+	public static ArrayList<EditoraDoLivro> getTodasAsEditoras() {
+		return todasAsEditoras;
+	}
+
+	public static void setTodasAsEditoras(ArrayList<EditoraDoLivro> todasAsEditoras) {
+		Livro.todasAsEditoras = todasAsEditoras;
+	}
+
+	public static ArrayList<Livro> getTodosOsLivros() {
+		return todosOsLivros;
+	}
+
+	public static void setTodosOsLivros(ArrayList<Livro> todosOsLivros) {
+		Livro.todosOsLivros = todosOsLivros;
+	}
+
+	public static void setTotalDeLivros(Integer totalDeLivros) {
+		Livro.totalDeLivros = totalDeLivros;
 	}
 	
 }

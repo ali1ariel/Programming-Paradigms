@@ -49,8 +49,22 @@ public class Exemplar {
 		}
 		
 		for (Integer a = 0;a<imprime.getExemplaresArray().size();a++) {
-			System.out.println(a+" - "+"ediï¿½ï¿½o: "+imprime.getExemplaresArray().get(a).getEdicaoDoLivro()+", ano: "+imprime.getExemplaresArray().get(a).getAnoDoLivro()+" e do cï¿½digo ISBN: "+imprime.getExemplaresArray().get(a).getCodigoISBN()+", tem "+imprime.getExemplaresArray().get(a).getExemplaresDisponiveis()+" de "+imprime.getExemplaresArray().get(a).getNumeroDeExemplares()+" exemplares disponï¿½veis.");
+			System.out.print(a+" - ");
+			imprimeInformacoesDoExemplar(imprime.getExemplaresArray().get(a));
 		}
+	}
+	
+	public static void imprimeInformacoesDoExemplar (Exemplar imprime) {
+		System.out.println("ediï¿½ï¿½o: "+imprime.getEdicaoDoLivro()+", ano: "+imprime.getAnoDoLivro()+" e do cï¿½digo ISBN: "+imprime.getCodigoISBN()+", tem "+imprime.getExemplaresDisponiveis()+" de "+imprime.getNumeroDeExemplares()+" exemplares disponï¿½veis.");
+	}
+	
+	public static void imprimeLivroEExemplar(Exemplar imprime) {
+		Livro paraImprimir = imprime.getLivroDesseExemplar();
+		Livro.imprimeInformaçõesLivro(paraImprimir);
+		System.out.println("E o exemplar emprestado desse livro contém as informações:");
+		imprimeInformacoesDoExemplar(imprime);
+		System.out.println("__________________");
+		
 	}
 	
 	public static void alteraExemplar(Livro altera) {
@@ -131,6 +145,22 @@ public class Exemplar {
 		return true;
 	}
 	
+	public static Exemplar selecionaExemplar(Livro verifica) {	
+		
+		if(verifica.getExemplaresArray().size()==1) return verifica.getExemplaresArray().get(0);
+		
+		else {
+			
+			Exemplar.imprimeExemplaresDoLivro(verifica);
+			System.out.println("selecione o índice");
+			Integer exemp = Integer.parseInt(ler.nextLine());
+			if((exemp > verifica.getExemplaresArray().size())||exemp<1) {
+				System.out.println("Exemplar invÃ¡lido.");
+				return null;
+			}
+			return verifica.getExemplaresArray().get(exemp);
+		}
+	}
 	
 	
 	public boolean modificaExemplaresDisponiveis(char verifica) {

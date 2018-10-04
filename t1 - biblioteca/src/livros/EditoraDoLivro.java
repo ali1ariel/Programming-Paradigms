@@ -47,28 +47,12 @@ public class EditoraDoLivro {
 		return;		
 	}
 	
-	public static Livro listarLivrosEditora() {
-		
-		ArrayList<Livro> editoraLivrosArray = new ArrayList<Livro>();
-		
-		
-		System.out.print("digite o nome da editora: ");
-		String editora = ler.nextLine();
-		for (Integer a = 0; a.intValue() < Livro.todosOsLivros.size();a++) {
-			if(Livro.todosOsLivros.get(a).getEditora().getNomeDaEditora().equals(editora)) {
-				editoraLivrosArray.add(Livro.todosOsLivros.get(a));
+	public static Livro listarLivrosEditora(Livro busca, String buscador) {
+		if(busca.getEditora().getNomeDaEditora().contains(buscador)) {
+				return busca;
 			}
+		else return null;
 		}
-		if(editoraLivrosArray.size()==0) {
-			System.out.println("editora não encontrada.");
-			return null;
-		}
-		System.out.println("Os livros da editora selecionada são:");
-		
-		return Livro.buscaPorOrdem(editoraLivrosArray);
-		
-		
-	}
 	
 	//SETTERS AND GETTERS
 	public String getNomeDaEditora() {

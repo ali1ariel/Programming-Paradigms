@@ -122,6 +122,39 @@ public class Usuario {
 	}
 	
 	
+	public static Usuario selecionaUsuario() {
+		System.out.println("Qual o usuário que irá emprestar?");
+		Usuario emprestante = Usuario.buscaUsuario();
+		if(!(podeEfetuarUsuario(emprestante))) {
+			System.out.println("Não foi permitido novo emprestimo");
+			return null;
+		}
+		
+		return emprestante;
+		
+	}
+	
+	public static boolean podeEfetuarUsuario (Usuario conferir) {
+		if(conferir.getMulta().intValue()>0) {
+			if(conferir.getLivrosEmprestados().isEmpty()) {
+				System.out.println("H� uma multa, por�m nenhum livro emprestado.");
+				return true; // tem multa mas não há livros emprestados
+			}
+			System.out.println("Há multa pendente e um livro emprestado.");
+			return false;
+			}
+		if(conferir.isProfessor()) {
+			if(conferir.getLivrosEmprestados().size()<=5) return true;
+		}
+		else {
+			if(conferir.getLivrosEmprestados().size()<=3) return true;
+		}
+		System.out.println("Máximo de livros emprestados");
+		return false;
+	}
+	
+	
+	
 	//GETTERS AND SETTERS
 	public String getNomeDoUsuario() {
 		return nomeDoUsuario;

@@ -19,22 +19,11 @@ public class Emprestimo {
 		Exemplar emprestar = null;
 		Emprestimo emprestando = new Emprestimo();
 		
-		if(paraEmprestar.getExemplaresArray().size()==1) emprestar = paraEmprestar.getExemplaresArray().get(0);
-		else {
-			Exemplar.imprimeExemplaresDoLivro(paraEmprestar);
-			System.out.println("Qual ediÃ§Ã£o deseja emprestar?");
-			Integer exemp = Integer.parseInt(ler.nextLine());
-			if(exemp > paraEmprestar.getExemplaresArray().size()) {
-				System.out.println("Exemplar invÃ¡lido.");
-				return false;
-			}
-			emprestar = paraEmprestar.getExemplaresArray().get(exemp);
-		}
+		emprestar = Exemplar.selecionaExemplar(paraEmprestar);
 		
-		System.out.println("Qual o usuÃ¡rio que irÃ¡ emprestar?");
-		Usuario emprestante = Usuario.buscaUsuario();
-		if(!(podeEmprestarUsuario(emprestante))) {
-			System.out.println("NÃ£o foi permitido novo emprestimo");
+		Usuario emprestante = Usuario.selecionaUsuario();
+		
+		if(emprestante==null) {
 			return false;
 		}
 		
@@ -57,24 +46,7 @@ public class Emprestimo {
 		
 	}
 	
-	public static boolean podeEmprestarUsuario (Usuario conferir) {
-		if(conferir.getMulta().intValue()>0) {
-			if(conferir.getLivrosEmprestados().isEmpty()) {
-				System.out.println("Há uma multa, porém nenhum livro emprestado.");
-				return true; // tem multa mas nÃ£o hÃ¡ livros emprestados
-			}
-			System.out.println("HÃ¡ multa pendente e um livro emprestado.");
-			return false;
-			}
-		if(conferir.isProfessor()) {
-			if(conferir.getLivrosEmprestados().size()<=5) return true;
-		}
-		else {
-			if(conferir.getLivrosEmprestados().size()<=3) return true;
-		}
-		System.out.println("MÃ¡ximo de livros emprestados");
-		return false;
-	}
+	
 	
 	public static boolean renovarEmprestimo (Emprestimo renovar) { ///FUNÇÃO RETORNA VDD OU FALSO DEPENDENDO SE CONSEGUIR EMPRESTAR
 		if (renovar.getEmprestado().getExemplaresDisponiveis()<0) {
@@ -106,15 +78,132 @@ public class Emprestimo {
 	}
 	
 
-	public static void imprimeEmprestimos() {
-		
+	public static void imprimeEmprestimosDeUsuarios(Usuario imprime) {
+		for(Integer a = Integer.valueOf(0); a.intValue() < todosOsEmprestimos.size(); a++ ) {
+			if(todosOsEmprestimos.get(a.intValue()).getEmprestante()==imprime) {
+				System.out.println(" emprestou o(s) livro(s):");
+				Exemplar.imprimeLivroEExemplar(todosOsEmprestimos.get(a).emprestado);
+			}
+		}
 	}
 
-	public static void imprimeTodosOsEmprestimos() {
+	public static void imprimeTodosOsEmprestimos(ArrayList<Emprestimo> baseDeEmprestimos) {
+		ArrayList<Usuario> impressao = new ArrayList<Usuario>();
+		for(Integer a = Integer.valueOf(0); a.intValue() < baseDeEmprestimos.size(); a++ ) {
+			Usuario base = baseDeEmprestimos.get(a).getEmprestante();
+			if(!impressao.contains(base)) {
+				System.out.print("O usuário: "+base.getNomeDoUsuario());
+				imprimeEmprestimosDeUsuarios(base);
+				impressao.add(base);
+			}
+		}
+	}
+	public static Emprestimo buscaEmprestimo() {
+		System.out.println("Deseja buscar os empréstimos: \n (1) - Título do Livro, (2) - ISBN do Livro, (3) - por usuário");
+		Integer option = Integer.parseInt(ler.nextLine());
+		ArrayList<Emprestimo> buscas = new ArrayList<Emprestimo>();
+		
+		
+				
+		if(option < 1||option >3) {
+			System.out.println("Nenhuma opção do tipo");
+		return null;
+		}
+		
+		Emprestimo addic = null;
+		String buscador = new String();
+		switch(option) {
+			case 1: {
+				System.out.println("digite o nome do livro:");
+				break;
+			}
+			case 2: {
+				System.out.println("digite o ISDB do livro:");
+				break;
+			}
+			case 3: {
+				System.out.println("digite o nome do usuário:");
+				break;
+			}
+		}
+		buscador = ler.nextLine();
+		for (Integer a = 0; a.intValue() < todosOsEmprestimos.size();a++) {	
+			switch(option) {
+				case 1:{
+					addic = buscaPorTitulo(a, buscador);
+					if(addic != null) {
+						buscas.add(addic);
+					}
+					break;
+				}
+				case 2:{
+					addic = buscaPorISBN(a, Integer.parseInt(buscador));
+					if(addic != null) {
+						buscas.add(addic);
+					}
+					break;
+				}
+				case 3:{
+					addic = buscaPorUsuario(a, buscador);
+					if(addic != null) {
+						buscas.add(addic);
+					}
+					break;
+				}
+			}
+			
+		}
+		
+		if (buscas.size()<1) {
+			System.out.println("Nada encontrado");
+			return null;
+		}
+		
+		if(buscas.size()==1) {
+			return buscas.get(0);
+		}
+		else {
+			imprimeTodosOsEmprestimos(buscas);
+			System.out.println("selecione o índice do emprestimo buscado");
+			Integer selecao = Integer.parseInt(ler.nextLine());
+			if(!(selecao<buscas.size())) {
+				System.out.println("Livro Inválido");
+				return null;
+			}
+			return buscas.get(selecao);
+		}
 		
 	}
 	
+
 	
+	public static Emprestimo buscaPorTitulo(Integer a, String buscador) {
+		
+		Livro procurando = todosOsEmprestimos.get(a.intValue()).getEmprestado().getLivroDesseExemplar();
+		if(procurando.getNomeDoLivro().contains(buscador)) {
+			return todosOsEmprestimos.get(a.intValue());
+		}
+		else return null;
+	}
+		
+	
+	public static Emprestimo buscaPorISBN(Integer a, Integer buscador) {
+		
+		Exemplar procurando = todosOsEmprestimos.get(a.intValue()).getEmprestado();
+		if(procurando.getCodigoISBN().equals(buscador)) {
+			return todosOsEmprestimos.get(a.intValue());
+		}
+		else return null;
+	}	
+	
+	public static Emprestimo buscaPorUsuario(Integer a, String buscador) {
+		
+		Usuario procurando = todosOsEmprestimos.get(a.intValue()).getEmprestante();
+		if(procurando.getNomeDoUsuario().contains(buscador)) {
+			return todosOsEmprestimos.get(a.intValue());
+		}
+		else return null;
+	}
 	
 	public Exemplar getEmprestado() {
 		return emprestado;
@@ -127,6 +216,7 @@ public class Emprestimo {
 	public Usuario getEmprestante() {
 		return emprestante;
 	}
+	
 
 	public void setEmprestante(Usuario emprestante) {
 		this.emprestante = emprestante;
