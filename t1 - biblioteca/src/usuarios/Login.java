@@ -12,18 +12,26 @@ public class Login {
 		Login cadastro = new Login();
 		boolean tentativa = false;
 		do {
-		System.out.println("Digite o nome de usuario que deseja:");
-		String userName = ler.nextLine();
-		for(Integer a = 0; a.intValue() < Usuario.todosOsUsuarios.size();a++) {
-			if(Usuario.todosOsUsuarios.get(a).getUser().getUserName().equals(userName)) {
-				System.out.println("Não é possível adicionar um usuário com esse Login, tente novamente");
+			System.out.println("Digite o nome de usuario que deseja:");
+			String userName = ler.nextLine();
+			if(Usuario.getTodosOsUsuarios().size()<1) {
+				cadastro.setUserName(userName);
 				break;
 			}
-			if(a.intValue() == (Usuario.todosOsUsuarios.size()-1)) {
-				tentativa = true;
+			for(Integer a = 0; a.intValue() < Usuario.getTodosOsUsuarios().size();a++) {
+				if(Usuario.getTodosOsUsuarios().get(a.intValue()).getUser().getUserName().equals(userName)) {
+					System.out.println("Nao e possível adicionar um usuário com esse Login, tente novamente");
+					break;
+				}
+				if(a.intValue() == (Usuario.getTodosOsUsuarios().size()-1)) {
+					tentativa = true;
+					cadastro.setUserName(userName);
+					break;
+				}
 			}
-		}
 		} while (tentativa==false);
+		
+		
 		
 		tentativa = false;
 		do {
@@ -31,8 +39,11 @@ public class Login {
 		String senha1 = ler.nextLine();
 		System.out.println("Confirme a senha digitada");
 		String senha2 = ler.nextLine();
-		if(senha1.equals(senha2)) tentativa = true;
-		else System.out.println("As senhas não conferem, tente novamente.");
+		if(senha1.equals(senha2)) {
+			tentativa = true;
+			cadastro.setPassword(senha1);
+		}
+		else System.out.println("As senhas nao conferem, tente novamente.");
 		
 		} while (tentativa==false);
 		

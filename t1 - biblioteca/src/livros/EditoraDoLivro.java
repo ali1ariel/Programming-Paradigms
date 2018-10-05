@@ -16,7 +16,7 @@ public class EditoraDoLivro {
 		editora.setNomeDaEditora(nomeEditora);
 		editora.getLivrosDaEditora().add(cadastro);
 		cadastro.setEditora(editora);
-		Livro.todasAsEditoras.add(editora);
+		Livro.getTodasAsEditoras().add(editora);
 		
 	}
 	
@@ -25,19 +25,19 @@ public class EditoraDoLivro {
 		String editora = ler.nextLine();
 		if(altera.getEditora().getNomeDaEditora().equals(editora)) return;
 		
-		for(Integer a = 0; a.intValue() < Livro.todasAsEditoras.size();a++) {
-			System.out.println(a.intValue() + " - "+Livro.todasAsEditoras.get(a).getNomeDaEditora());
+		for(Integer a = 0; a.intValue() < Livro.getTodasAsEditoras().size();a++) {
+			System.out.println(a.intValue() + " - "+Livro.getTodasAsEditoras().get(a).getNomeDaEditora());
 		}
 		
 		
-		Integer aux = Livro.todasAsEditoras.indexOf(altera.getEditora());
-		Livro.todasAsEditoras.get(aux).getLivrosDaEditora().remove(altera);
+		Integer aux = Livro.getTodasAsEditoras().indexOf(altera.getEditora());
+		Livro.getTodasAsEditoras().get(aux).getLivrosDaEditora().remove(altera);
 		altera.setEditora(null);
 		
-		for(Integer a = 0; a.intValue() < Livro.todasAsEditoras.size(); a++) {
-			if (Livro.todasAsEditoras.get(a).getNomeDaEditora().equals(editora)) {
-				Livro.todasAsEditoras.get(a).getLivrosDaEditora().add(altera);
-				altera.setEditora(Livro.todasAsEditoras.get(a));
+		for(Integer a = 0; a.intValue() < Livro.getTodasAsEditoras().size(); a++) {
+			if (Livro.getTodasAsEditoras().get(a).getNomeDaEditora().equals(editora)) {
+				Livro.getTodasAsEditoras().get(a).getLivrosDaEditora().add(altera);
+				altera.setEditora(Livro.getTodasAsEditoras().get(a));
 				return;
 			}
 		}

@@ -12,8 +12,42 @@ public class Usuario {
 	private Integer multa = 0;
 	private static Integer totalDeUsuarios = 0;
 	static Scanner ler = new Scanner(System.in);
-	static ArrayList<Usuario> todosOsUsuarios = new ArrayList<Usuario>();
+	private static ArrayList<Usuario> todosOsUsuarios = new ArrayList<Usuario>();
 
+	
+	public static void menuUsuario() {
+		do {
+			System.out.println("O que deseja fazer? (1) - cadastrar usuario. (2) - excluir usuário. (3) - listar usuarios. (4) - pagar multa de usuario.");
+			Integer option = Integer.parseInt(ler.nextLine());
+			switch(option) {
+			case 1:{
+				cadastrarUsuario();
+				break;
+			}
+			case 2:{
+				Usuario excluir = buscaUsuario();
+				excluirUsuario(excluir);
+				break;
+			}
+			case 3:{
+				listarUsuarios(getTodosOsUsuarios());
+				break;
+			}
+			case 4:{
+				Usuario devedor = buscaUsuario();
+				devedor.pagaMulta();
+				break;
+			}
+			default:{
+				System.out.println("Opção inválida");
+				break;
+			}
+			}
+			System.out.println("Deseja fazer algo a mais com os usuários?\n (1) - Sim. (outro) - não.");
+			
+		}while(Integer.parseInt(ler.nextLine())==1);
+		return;
+	}
 	
 	public static void cadastrarUsuario() {
 		
@@ -25,14 +59,16 @@ public class Usuario {
 				
 		cadastro.setUser(Login.defineLogin());
 		
-		System.out.println("O usuï¿½rio ï¿½ um aluno ou professor? (1) - Aluno, (outro) - professor");
+		System.out.println(cadastro.getUser().getUserName());
+		
+		System.out.println("O usuario e um aluno ou professor? (1) - Aluno, (outro) - professor");
 		if(Integer.parseInt(ler.nextLine())==1) {
 			cadastro.setProfessor(false);
 		} else {
 			cadastro.setProfessor(true);
 		}
 			
-		todosOsUsuarios.add(cadastro);
+		getTodosOsUsuarios().add(cadastro);
 		
 		return;
 	}
@@ -50,7 +86,7 @@ public class Usuario {
 		}
 		
 		setTotalDeUsuarios(Usuario.getTotalDeUsuarios() - 1);
-		todosOsUsuarios.remove(excluir);
+		getTodosOsUsuarios().remove(excluir);
 		return;
 	}
 
@@ -67,6 +103,8 @@ public class Usuario {
 		else System.out.println(" e ï¿½ aluno.");
 	}
 	
+	
+	
 	public static Usuario buscaUsuario () {
 		
 		Usuario usuarioBuscado = null;
@@ -82,9 +120,9 @@ public class Usuario {
 			usuarioBuscado = buscaUsuarioNome(busca);
 			break;
 			default:
-				for (Integer a = 0; a.intValue() < todosOsUsuarios.size();a++) {
-					if(todosOsUsuarios.get(a).getUser().getUserName().equals(busca)) {
-						usuarioBuscado = todosOsUsuarios.get(a);
+				for (Integer a = 0; a.intValue() < getTodosOsUsuarios().size();a++) {
+					if(getTodosOsUsuarios().get(a).getUser().getUserName().contains(busca)) {
+						usuarioBuscado = getTodosOsUsuarios().get(a);
 					}
 				}
 		}
@@ -99,21 +137,22 @@ public class Usuario {
 		ArrayList<Usuario> buscas = new ArrayList<Usuario>();
 		
 		
-		
-		for (Integer a = 0; a.intValue() < todosOsUsuarios.size();a++) {
-			if(todosOsUsuarios.get(a).getNomeDoUsuario().contains(busca)) {
-				buscas.add(todosOsUsuarios.get(a));
+		boolean mark = false;
+		for (Integer a = 0; a.intValue() < getTodosOsUsuarios().size();a++) {
+			if(getTodosOsUsuarios().get(a).getNomeDoUsuario().contains(busca)) {
+				buscas.add(getTodosOsUsuarios().get(a));
+				mark = true;
 			}
 		}
 		
-		if (buscas.size()<1) return null;
+		if (mark == false) return null;
 		if(buscas.size()==1) return buscas.get(0);
 		else {
 			listarUsuarios(buscas);
-			System.out.println("selecione o ï¿½ndice do usuï¿½rio buscado");
+			System.out.println("selecione o indice do usuario buscado");
 			Integer selecionado = Integer.parseInt(ler.nextLine());
 			if(!(selecionado<buscas.size())) {
-				System.out.println("usuï¿½rio Invï¿½lido");
+				System.out.println("usuario Invalido");
 				return null;
 			}
 			return buscas.get(selecionado);
@@ -123,10 +162,11 @@ public class Usuario {
 	
 	
 	public static Usuario selecionaUsuario() {
-		System.out.println("Qual o usuÃ¡rio que irÃ¡ emprestar?");
+		System.out.println("Qual o usuario que ira emprestar?");
 		Usuario emprestante = Usuario.buscaUsuario();
+		if(emprestante == null) return null;
 		if(!(podeEfetuarUsuario(emprestante))) {
-			System.out.println("NÃ£o foi permitido novo emprestimo");
+			System.out.println("Nao foi permitido novo emprestimo");
 			return null;
 		}
 		
@@ -137,10 +177,10 @@ public class Usuario {
 	public static boolean podeEfetuarUsuario (Usuario conferir) {
 		if(conferir.getMulta().intValue()>0) {
 			if(conferir.getLivrosEmprestados().isEmpty()) {
-				System.out.println("Há uma multa, porém nenhum livro emprestado.");
+				System.out.println("Ha uma multa, porem nenhum livro emprestado.");
 				return true; // tem multa mas nÃ£o hÃ¡ livros emprestados
 			}
-			System.out.println("HÃ¡ multa pendente e um livro emprestado.");
+			System.out.println("Ha multa pendente e um livro emprestado.");
 			return false;
 			}
 		if(conferir.isProfessor()) {
@@ -149,8 +189,12 @@ public class Usuario {
 		else {
 			if(conferir.getLivrosEmprestados().size()<=3) return true;
 		}
-		System.out.println("MÃ¡ximo de livros emprestados");
+		System.out.println("Maximo de livros emprestados");
 		return false;
+	}
+	
+	public void pagaMulta() {
+		this.setMulta(0);
 	}
 	
 	
@@ -191,5 +235,13 @@ public class Usuario {
 	}
 	public void setLivrosEmprestados(ArrayList<Exemplar> livrosEmprestados) {
 		this.livrosEmprestados = livrosEmprestados;
+	}
+
+	public static ArrayList<Usuario> getTodosOsUsuarios() {
+		return todosOsUsuarios;
+	}
+
+	public static void setTodosOsUsuarios(ArrayList<Usuario> todosOsUsuarios) {
+		Usuario.todosOsUsuarios = todosOsUsuarios;
 	}
 }

@@ -13,13 +13,47 @@ public class Reserva {
 	private static ArrayList<Reserva> todasAsReservas = new ArrayList<Reserva>();
 	static Scanner ler = new Scanner(System.in);
 	
-	public static boolean solicitarReserva() {
+	public static void menuReservas() {
+		do {
+			System.out.println("O que deseja fazer? (1) - solicitar uma reserva. (2) - cancelar uma reserva. (3) - Listar todas as reservas.");
+			Integer option = Integer.parseInt(ler.nextLine());
+			switch(option) {
+			case 1:{
+				if(solicitarReservaComBusca()) System.out.println("Reservado com sucesso");	
+				else System.out.println("nao foi possivel reservar");
+				break;
+			}
+			case 2:{
+				if(cancelarReserva()) System.out.println("Cancelado com sucesso!");
+				else System.out.println("nao foi possivel cancelar");
+				break;
+			}
+			case 3:{
+				imprimirReservas(getTodasAsReservas());
+				break;
+			}
+			default:{
+				System.out.println("Opcao invalida");
+				break;
+			}
+			}
+			System.out.println("deseja algo a mais com as reservas?\\n (1) - SIM. (outro) - Nao.");
+		}while(Integer.parseInt(ler.nextLine())==1);
+		return;
+	}
+	
+	public static boolean solicitarReservaComBusca() {
 		
 		Livro buscar = Livro.buscarLivro(Livro.getTodosOsLivros());
 		Exemplar reservar = Exemplar.selecionaExemplar(buscar);
+		return solicitarReserva(reservar);
 		
+	}
+	
+	public static boolean solicitarReserva(Exemplar reservar) {
+				
 		if(reservar.getExemplaresDisponiveis()>0) {
-			System.out.println("O livro ainda contém unidades disponíveis.");
+			System.out.println("O livro ainda contém unidades disponiveis.");
 			return false;
 		}
 		
@@ -34,7 +68,7 @@ public class Reserva {
 	}
 	
 	public static boolean cancelarReserva() {
-		imprimirReservas();
+		imprimirReservas(getTodasAsReservas());
 		System.out.println("selecione a reserva que quer cancelar:");
 		Integer seleciona = Integer.parseInt(ler.nextLine());
 		if((seleciona > Reserva.getTodasAsReservas().size())||(seleciona<1)) return false;	
@@ -46,18 +80,17 @@ public class Reserva {
 		}
 	}
 	
-	public static void imprimirReservas() {
-		for(Integer a = 0; a.intValue() < Reserva.getTodasAsReservas().size();a++) {
-			Reserva auxiliar = Reserva.getTodasAsReservas().get(a);
-			System.out.print(a+" - o usuário ");
+	public static void imprimirReservas(ArrayList<Reserva> imprime) {
+		for( int a = 0; a < imprime.size(); a++) {
+			Reserva auxiliar = imprime.get(a);
+			System.out.print(a+" - o usuario ");
 			Usuario.imprimeUsuario(auxiliar.getUsuarioQueReserva());
 			System.out.println("reservou ");
-			Livro.imprimeInformaçõesLivro(auxiliar.getExemplarReservando().getLivroDesseExemplar());
+			Livro.imprimeInformacoesLivro(auxiliar.getExemplarReservando().getLivroDesseExemplar());
 			System.out.println("no exemplar ");
 			Exemplar.imprimeInformacoesDoExemplar(auxiliar.getExemplarReservando());
 			System.out.println("________________");
-		}
-		
+		}	
 		
 	}
 	

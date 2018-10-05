@@ -11,7 +11,7 @@ public class Exemplar {
 	private Integer exemplaresDisponiveis;
 	private Livro livroDesseExemplar;
 	private ArrayList<Emprestimo> emprestimosEfetuados = new ArrayList<Emprestimo>();
-	static Scanner ler;
+	static Scanner ler = new Scanner(System.in);
 	
 	
 	public static void adicionarExemplar(Livro cadastro) {
@@ -20,7 +20,7 @@ public class Exemplar {
 		
 		Exemplar novoExemplar = new Exemplar();
 		
-		System.out.println("Digite a ediï¿½ï¿½o do novo livro");
+		System.out.println("Digite a edicao do novo livro");
 		novoExemplar.setEdicaoDoLivro(ler.nextLine());
 		
 		System.out.println("Digite o ano do novo livro");
@@ -31,7 +31,7 @@ public class Exemplar {
 		novoExemplar.setNumeroDeExemplares(Integer.parseInt(ler.nextLine()));
 		novoExemplar.setExemplaresDisponiveis(novoExemplar.getNumeroDeExemplares());
 		
-		System.out.println("Digite o nï¿½mero do cï¿½digo ISBN");
+		System.out.println("Digite o numero do codigo ISBN");
 		novoExemplar.setCodigoISBN(Integer.parseInt(ler.nextLine()));
 		
 		novoExemplar.setLivroDesseExemplar(cadastro);
@@ -55,15 +55,15 @@ public class Exemplar {
 	}
 	
 	public static void imprimeInformacoesDoExemplar (Exemplar imprime) {
-		System.out.println("ediï¿½ï¿½o: "+imprime.getEdicaoDoLivro()+", ano: "+imprime.getAnoDoLivro()+" e do cï¿½digo ISBN: "+imprime.getCodigoISBN()+", tem "+imprime.getExemplaresDisponiveis()+" de "+imprime.getNumeroDeExemplares()+" exemplares disponï¿½veis.");
+		System.out.println("edicao: "+imprime.getEdicaoDoLivro()+", ano: "+imprime.getAnoDoLivro()+" e do codigo ISBN: "+imprime.getCodigoISBN()+", tem "+imprime.getExemplaresDisponiveis()+" de "+imprime.getNumeroDeExemplares()+" exemplares disponiveis.");
 	}
 	
 	public static void imprimeLivroEExemplar(Exemplar imprime) {
 		Livro paraImprimir = imprime.getLivroDesseExemplar();
-		Livro.imprimeInformaçõesLivro(paraImprimir);
-		System.out.println("E o exemplar emprestado desse livro contém as informações:");
+		Livro.imprimeInformacoesLivro(paraImprimir);
+		System.out.println("E o exemplar emprestado desse livro contem as informações:");
 		imprimeInformacoesDoExemplar(imprime);
-		System.out.println("__________________");
+
 		
 	}
 	
@@ -72,11 +72,11 @@ public class Exemplar {
 		ler = new Scanner (System.in);
 		imprimeExemplaresDoLivro(altera);
 		Integer exemp = Integer.valueOf(0);
-		System.out.println("Vocï¿½ quer: \n (1) - Editar um exemplar (2) - Excluir um exemplar (3) - Adicionar um exemplar?");
-		System.out.println("Se o livro tiver apenas um ï¿½nico exemplar, ao excluï¿½-lo tambï¿½m estarï¿½ excluindo o livro.");
+		System.out.println("Voce quer: \n (1) - Editar um exemplar (2) - Excluir um exemplar (3) - Adicionar um exemplar?");
+		System.out.println("Se o livro tiver apenas um unico exemplar, ao exclui-lo tambem estaria excluindo o livro.");
 		Integer option = Integer.parseInt(ler.nextLine());
 		if(option.intValue()==1||option.intValue()==2) {
-			System.out.println("Qual exemplar? digite o cï¿½digo que aparece no inï¿½cio da linha.");
+			System.out.println("Qual exemplar? digite o codigo que aparece no inicio da linha.");
 			exemp = Integer.parseInt(ler.nextLine());
 		}
 		
@@ -87,33 +87,36 @@ public class Exemplar {
 				System.out.println("O que deseja alterar? \n (1) - numero da edicao. (2) - Ano do Livro. (3) - numero de exemplares ou (4) - codigo ISDB");
 				switch (Integer.parseInt(ler.nextLine())) {
 				case 1: 
-					System.out.println("Digite a alteraï¿½ï¿½o");
+					System.out.println("Digite a alteracao");
 					altera.getExemplaresArray().get(exemp).setEdicaoDoLivro(ler.nextLine());
 					break;
 				case 2: 
-					System.out.println("Digite a alteraï¿½ï¿½o");
+					System.out.println("Digite a alteracao");
 					altera.getExemplaresArray().get(exemp).setAnoDoLivro(ler.nextLine());
 					break;
 				case 3: 
-					System.out.println("Digite a alteraï¿½ï¿½o");
+					System.out.println("Digite a alteracao");
 					Integer verifica = Integer.parseInt(ler.nextLine());
 					Integer emprestados = (altera.getExemplaresArray().get(exemp).getNumeroDeExemplares().intValue() - altera.getExemplaresArray().get(exemp).getExemplaresDisponiveis().intValue());
 					if (verifica.intValue() >= emprestados) {
 						altera.getExemplaresArray().get(exemp).setNumeroDeExemplares(verifica);
 						altera.getExemplaresArray().get(exemp).setExemplaresDisponiveis(verifica - emprestados);
 					} else {
-						System.out.println("nï¿½o foi possï¿½vel alterar para um nï¿½mero de exemplare menor do que o de exemplares emprestados.");
+						System.out.println("nao foi possivel alterar para um numero de exemplares menor do que o de exemplares emprestados.");
 					}
 					break;
 				case 4: 
-					System.out.println("Digite a alteraï¿½ï¿½o");
+					System.out.println("Digite a alteracao");
 					altera.getExemplaresArray().get(exemp).setCodigoISBN(Integer.parseInt(ler.nextLine()));
+					break;
+				default:
+					System.out.println("Opção invalida");
 					break;
 				}
 				
 				System.out.println();
 				imprimeExemplaresDoLivro(altera);
-				System.out.println("\n Deseja alterar mais algo nesse exemplar? (1) - sim. (outro) - nï¿½o");
+				System.out.println("\n Deseja alterar mais algo nesse exemplar? (1) - sim. (outro) - nao");
 			} while (Integer.parseInt(ler.nextLine())==1);	
 			
 			break;
@@ -152,10 +155,10 @@ public class Exemplar {
 		else {
 			
 			Exemplar.imprimeExemplaresDoLivro(verifica);
-			System.out.println("selecione o índice");
+			System.out.println("selecione o indice");
 			Integer exemp = Integer.parseInt(ler.nextLine());
-			if((exemp > verifica.getExemplaresArray().size())||exemp<1) {
-				System.out.println("Exemplar invÃ¡lido.");
+			if((exemp > verifica.getExemplaresArray().size())||(exemp<0)) {
+				System.out.println("Exemplar invalido.");
 				return null;
 			}
 			return verifica.getExemplaresArray().get(exemp);

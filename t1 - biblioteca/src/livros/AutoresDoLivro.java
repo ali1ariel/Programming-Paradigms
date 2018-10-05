@@ -12,15 +12,15 @@ public class AutoresDoLivro {
 	
 	public static void imprimeAutorDoLivro(Livro imprime) {
 		System.out.print(" de:");
-		if(imprime.autorArray.size()>1) {
-			for(Integer a=0; a < imprime.autorArray.size(); a++)
+		if(imprime.getAutorArray().size()>1) {
+			for(Integer a=0; a < imprime.getAutorArray().size(); a++)
 			{
-				System.out.print(imprime.autorArray.get(a).getNomeDoAutor());
-				if ((a+1) == imprime.autorArray.size()) System.out.println(". ");
+				System.out.print(imprime.getAutorArray().get(a).getNomeDoAutor());
+				if ((a+1) == imprime.getAutorArray().size()) System.out.println(". ");
 				else System.out.print(", ");
 			}
 		} else {
-			System.out.print(imprime.autorArray.get(0).getNomeDoAutor()+". ");
+			System.out.print(imprime.getAutorArray().get(0).getNomeDoAutor()+". ");
 		}
 		
 	}
@@ -30,21 +30,21 @@ public class AutoresDoLivro {
 		ler = new Scanner(System.in);
 		
 		System.out.println("qual autor você deseja excluir?");
-		System.out.println("ATENÇÃO: não é possível remover autores quando há apenas um no livro.");
+		System.out.println("ATENCAO: nao e possivel remover autores quando ha apenas um no livro.");
 		
-		for (Integer a = 0; a < altera.autorArray.size(); a++) {
-			System.out.println(a+" - "+altera.autorArray.get(a).getNomeDoAutor());
+		for (Integer a = 0; a < altera.getAutorArray().size(); a++) {
+			System.out.println(a+" - "+altera.getAutorArray().get(a).getNomeDoAutor());
 		}
 		
 		Integer option = Integer.parseInt(ler.nextLine());
 		
-		if (altera.autorArray.size()>1) {
-			System.out.println("Você quer: (1) - excluir ou (outro) - cancelar? \n"+option.intValue()+" - "+altera.autorArray.get(option.intValue()).getNomeDoAutor());
+		if (altera.getAutorArray().size()>1) {
+			System.out.println("Voce quer: (1) - excluir ou (outro) - cancelar? \n"+option.intValue()+" - "+altera.getAutorArray().get(option.intValue()).getNomeDoAutor());
 			
 			switch (Integer.parseInt(ler.nextLine())) {
 			case 1:
-				altera.autorArray.get(option).getLivrosDoAutor().remove(altera);
-				altera.autorArray.remove(option.intValue());
+				altera.getAutorArray().get(option).getLivrosDoAutor().remove(altera);
+				altera.getAutorArray().remove(option.intValue());
 			default:
 				return;
 					
@@ -67,13 +67,13 @@ public class AutoresDoLivro {
 			autoria.setNomeDoAutor(ler.nextLine());
 	
 			
-			if(!Livro.todosOsAutores.contains(autoria)) Livro.todosOsAutores.add(autoria);
+			if(!Livro.getTodosOsAutores().contains(autoria)) Livro.getTodosOsAutores().add(autoria);
 				
-				cadastro.autorArray.add(Livro.todosOsAutores.get(Livro.todosOsAutores.indexOf(autoria)));
-				cadastro.autorArray.get(cadastro.autorArray.indexOf(autoria)).getLivrosDoAutor().add(cadastro);
-				cadastro.autorArray.sort(organiza);
+				cadastro.getAutorArray().add(Livro.getTodosOsAutores().get(Livro.getTodosOsAutores().indexOf(autoria)));
+				cadastro.getAutorArray().get(cadastro.getAutorArray().indexOf(autoria)).getLivrosDoAutor().add(cadastro);
+				cadastro.getAutorArray().sort(organiza);
 			
-			System.out.println("Quer adicionar um novo autor?\n 1-Sim outro-nï¿½o");
+			System.out.println("Quer adicionar um novo autor?\n 1-Sim outro-nao");
 			Integer resposta = Integer.valueOf(ler.nextLine());
 			System.out.println(resposta);
 			if (!resposta.equals(1)) {
@@ -81,7 +81,7 @@ public class AutoresDoLivro {
 			}else {
 				autoria = new AutoresDoLivro();
 			}
-			Livro.todosOsAutores.sort(organiza);
+			Livro.getTodosOsAutores().sort(organiza);
 		}
 
 	}

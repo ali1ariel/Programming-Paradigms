@@ -40,10 +40,9 @@ public class Livro {
 		return;
 	}
 	
-	public static void menu(ArrayList<Livro> livroArray) {
+	public static void menuLivros(ArrayList<Livro> livroArray) {
 		
 		do {
-			System.out.println("A biblioteca contém "+totalDeLivros.intValue()+" livros.");
 			System.out.println("O que gostaria de fazer? \n (1) - Adicionar um novo livro. (2) - Lidar com um existente. (3) - Imprimir livros.");
 			switch (Integer.parseInt(ler.nextLine())) {
 			case 1:
@@ -55,7 +54,7 @@ public class Livro {
 					break;
 				}
 					System.out.println("O livro selecionado foi:");
-					imprimeInformaçõesLivro(selecionado);
+					imprimeInformacoesLivro(selecionado);
 					System.out.println("O que deseja fazer com o livro selecionado? (1) - Excluir, (2) - Editar");
 					switch (Integer.parseInt(ler.nextLine())) {
 					
@@ -63,23 +62,25 @@ public class Livro {
 						if(livroArray.size() > 0) {
 							excluirLivro(selecionado);
 						} else {
-							System.out.println("Não há livros para serem excluidos!");
+							System.out.println("Nao ha livros para serem excluidos!");
 						}
 						break;
 					case 2:
 						if(livroArray.size() > 0) {
 							alteraLivro(selecionado);
 						}else {
-							System.out.println("Não há livros para serem editados!");
+							System.out.println("Nao ha livros para serem editados!");
 						}
 						break;
 						default:
-							System.out.println("Opção inválida!");
+							System.out.println("Opçao invalida!");
 				}
 			case 3: 
 				if(livroArray.size()>0) imprimeTodosOsLivros(livroArray);
-				else System.out.println("Não há elementos a imprimir");
+				else System.out.println("Nao ha elementos a imprimir");
 				break;
+				
+			case 4:
 			}
 			System.out.println("deseja algo a mais?\n (1) - SIM. (2) - Nao.");
 		}while(Integer.parseInt(ler.nextLine())==1);
@@ -89,7 +90,7 @@ public class Livro {
 	public static Livro buscarLivro (ArrayList<Livro> busca) {
 		
 		Livro selecionado = null;
-		System.out.println("Deseja buscar o livro por: (1) - Nome, (2) - Editora, (3) - Código ISBN, (4) - Por índice de todos os livros.");
+		System.out.println("Deseja buscar o livro por: (1) - Nome, (2) - Editora, (3) - Código ISBN, (4) - Por indice de todos os livros.");
 		
 		ArrayList<Livro> buscas = new ArrayList<Livro>();
 		String buscador = new String();
@@ -97,7 +98,7 @@ public class Livro {
 		Integer option = Integer.parseInt(ler.nextLine());
 		
 		if(option<1||option>4) {
-			System.out.println("Opção inválida");
+			System.out.println("Opção invalida");
 			return null;
 		}else if (option < 4) {
 		
@@ -111,7 +112,7 @@ public class Livro {
 					break;
 				}
 				case 3: {
-					System.out.println("digite o código ISBN do livro:");
+					System.out.println("digite o codigo ISBN do livro:");
 					break;
 				}
 			}
@@ -162,10 +163,10 @@ public class Livro {
 		}
 		else {
 			imprimeTodosOsLivros(buscas);
-			System.out.println("selecione o índice do livro buscado");
+			System.out.println("selecione o indice do livro buscado");
 			Integer selecao = Integer.parseInt(ler.nextLine());
 			if(!(selecao<buscas.size())) {
-				System.out.println("Livro Inválido");
+				System.out.println("Livro Invalido");
 				return null;
 			}
 			return buscas.get(selecao);
@@ -194,7 +195,7 @@ public class Livro {
 		
 		imprimeTodosOsLivros(busca);
 		
-		System.out.println("Qual o índice do livro deseja selecionar?");
+		System.out.println("Qual o indice do livro deseja selecionar?");
 		Integer selecionar = Integer.parseInt(ler.nextLine());
 		if (!(selecionar < busca.size())) return null;
 		Livro selecionado = busca.get(selecionar);
@@ -203,20 +204,20 @@ public class Livro {
 	}
 	
 	
-	public static void imprimeInformaçõesLivro (Livro imprime) {
-		
+	public static void imprimeInformacoesLivro(Livro imprime) {
+
 		System.out.print(imprime.getNomeDoLivro());
-		
+
 		AutoresDoLivro.imprimeAutorDoLivro(imprime);
-		
-		System.out.println("da editora: "+imprime.getEditora().getNomeDaEditora()+".");
+
+		System.out.println("da editora: " + imprime.getEditora().getNomeDaEditora() + ".");
 	}
 
 	public static void imprimeTodosOsLivros(ArrayList<Livro> imprime) {
 		for(Integer a = 0; a.intValue() < imprime.size();a++) {
 			
 			System.out.print("O livro ("+a+") - ");
-			imprimeInformaçõesLivro(imprime.get(a));
+			imprimeInformacoesLivro(imprime.get(a));
 			Exemplar.imprimeExemplaresDoLivro(imprime.get(a));
 			System.out.println("_______________________");	
 			
@@ -231,7 +232,7 @@ public class Livro {
 			System.out.println("2 - excluir algum autor");
 			System.out.println("3 - adicionar algum autor");
 			System.out.println("4 - a editora");
-			System.out.println("5 - alguma edição");
+			System.out.println("5 - alguma edicao");
 			
 			
 			ler = new Scanner(System.in);
@@ -256,8 +257,8 @@ public class Livro {
 				
 			}if(Livro.todosOsLivros.contains(altera)) {
 				System.out.println("As alterações resultaram em:");
-				imprimeInformaçõesLivro(altera);
-				System.out.println("deseja modificar mais alguma coisa? 1 - sim, outro - não");
+				imprimeInformacoesLivro(altera);
+				System.out.println("deseja modificar mais alguma coisa? 1 - sim, outro - nao");
 				if(Integer.parseInt(ler.nextLine())!=1) break;
 			}else {
 				break;
@@ -296,7 +297,7 @@ public class Livro {
 			
 		return;
 		} 
-		System.out.println("Não é possível excluir pois há exemplares emprestados");
+		System.out.println("Nao e possível excluir pois ha exemplares emprestados");
 		return;
 	}
 
