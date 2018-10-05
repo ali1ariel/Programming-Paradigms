@@ -1,3 +1,25 @@
-10/09 - 15:12.: No momento, está sendo criada a função de exclusão, a principal dificuldade é entender o relacionamento dos ArrayLists autorlivro e todosOsAutores.
-	
-	A função apagar livro apaga exemplares, se não houver mais exemplares apaga o Livro.
+INFORMAÇÕES.
+
+** O PROGRAMA FOI CRIADO NA VERSÃO JRE 1.8.0_181 **
+
+• Com exceção das funções relativas ao banco de dados, todos os requisitos foram cumpridos.
+
+• Os conceitos de Livro, Exemplar e Unidade são diferentes no contexto desse trabalho, Livro se refere as informações que não mudam como o nome do livro, autor e editora; Exemplar contem informações quem variam como ano e edição, assim como o código ISBN, e Unidade são as unidades dos exemplares, cada unidade de livro em si.
+
+•Reservas são possíveis apenas quando o número de exemplares disponíveis está zerado.
+
+• O programa se inicia em Menu Principal e se decorre de uma forma semelhante a árvore, navegando, descendo e subindo através das opções, então atenção.
+
+• recomenda-se criar primeiro os livros e usuários antes de tentar empréstimos, e realizar empréstimos antes de tentar reservar, não foi realizado testes em algo diferente dessa ordem.
+
+•Buscas geralmente geram outras listas nas quais precisa-se digitar o índice da posição do objeto requisitado.
+
+As seguintes informações são apenas para distinguir os objetos e podem ser comentadas, junto com suas respectivas funções, sem alterar as funções principais para facilitar na inserção:
+
+	Livro:
+		•AutorArray
+		•TodosOsAutores
+
+	Exemplar:
+		•AnoDoLivro
+		•EdicaoDoLivro
